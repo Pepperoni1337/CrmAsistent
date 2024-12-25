@@ -34,7 +34,7 @@ final class TestController extends AbstractController
 */
 
         $this->fileGenerator->generate(
-            __DIR__ . '/../Service/',
+            __DIR__ . '/../Controller/Note/',
             'code_generator/create_controller.html.twig',
             [
                 'fileName' => 'CreateNoteAction',
