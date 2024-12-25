@@ -1,0 +1,15 @@
+{% macro heading(name, info, action = null) %}
+    <div class="px-5 d-flex flex-row justify-content-between">
+        <div>
+            <h3 class="mb-0 text-4xl font-weight-bolder">{{ name }}</h3>
+            <p class="mb-4">
+                {{ info }}
+            </p>
+        </div>
+        {% if action is not null %}
+            <div>
+                <a class="btn btn-outline-dark mt-4 w-100" href="{{ action.path }}" type="button">{{ action.name }}</a>
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}

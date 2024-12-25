@@ -1,0 +1,42 @@
+{% set parts = entity|split('\\') %}
+{% set entityName = parts|last %}
+<?php
+
+namespace App\Controller\Note;
+
+use {{ entity }};
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Attribute\Route;
+
+final class {{ fileName }} extends AbstractController
+{
+    public function __construct(
+        private readonly EntityManagerInterface $em
+    )
+    {
+    }
+
+    #[Route('{{ routePath }}', name: '{{ routeName }}', methods: ['GET', 'POST'])]
+    public function __invoke(Request $request)
+    {
+        if ($request->getMethod() === 'POST') {
+            $entity = new {{ entityName }}(
+{% for field in fields %}
+                {{ field }}: $request->request->get('{{ field }}'),
+{% endfor %}
+            );
+
+            $this->em->persist($entity);
+            $this->em->flush();
+
+            return $this->redirectToRoute('{{ redirectRouteName }}');
+        }
+
+        return $this->render(
+            '{{ templatePath }}',
+            [],
+        );
+    }
+}

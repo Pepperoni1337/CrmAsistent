@@ -1,0 +1,12 @@
+
+#file_templates:
+# Service/CreateNoteAction:
+#   template: '@FileTemplateBundle/Controller/create_controller.html.twig'
+#   variables:
+#     fileName: 'CreateNoteAction'
+#     routePath: '/notes/create'
+#     routeName: 'note_create'
+#     entity: 'App\Entity\Note'
+#     redirectRouteName: 'note_list'
+#     templatePath: 'note/create_note.html.twig'
+#     fields: [ 'text' ]
