@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\DailyNote\DailyNote;
 use App\Entity\Note\Note;
 use App\Entity\Task\Task;
 use App\Service\FileGenerator;
@@ -45,6 +46,20 @@ final class TestController extends AbstractController
                 'templatePath' => 'note/create_note.html.twig',
                 'fields' => ['text'],
         ],
+        );
+
+        $this->fileGenerator->generate(
+            __DIR__ . '/../Controller/DailyNote/',
+            'code_generator/create_controller.html.twig',
+            [
+                'fileName' => 'CreateDailyNoteAction',
+                'routePath' => '/daily_notes/create',
+                'routeName' => 'daily_note_create',
+                'entity' => DailyNote::class,
+                'redirectRouteName' => 'daily_note_list',
+                'templatePath' => 'daily_note/create_daily_note.html.twig',
+                'fields' => ['text'],
+            ],
         );
 
         return new JsonResponse([

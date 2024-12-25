@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\DailyNotes;
+namespace App\Controller\DailyNote;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
