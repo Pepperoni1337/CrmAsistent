@@ -35,10 +35,6 @@ final class TestController extends AbstractController
         dd($test);
 */
 
-        $test = $this->parameterBag->get('file_templates_bundle');
-
-        dd($test);
-
         $this->fileGenerator->generate(
             __DIR__ . '/../Service/',
             'code_generator/create_controller.html.twig',
