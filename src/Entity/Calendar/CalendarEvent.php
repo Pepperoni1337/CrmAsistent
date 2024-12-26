@@ -36,13 +36,27 @@ final class CalendarEvent
     private int $year;
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true, enumType: CalendarEventType::class)]
-    private ?string $type;
+    private ?string $type = null;
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true, enumType: CalendarEventPeriod::class)]
-    private ?string $period;
+    private ?string $period = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
+
+    public function __construct(
+        string $name,
+        int $day,
+        int $month,
+        int $year
+    ) {
+        $this->id = Uuid::v6();
+        $this->name = $name;
+        $this->day = $day;
+        $this->month = $month;
+        $this->year = $year;
+        $this->updatedAt = new DateTimeImmutable();
+    }
 
     public function getId(): Uuid
     {
