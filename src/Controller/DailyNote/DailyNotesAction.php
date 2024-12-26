@@ -14,6 +14,6 @@ final class DailyNotesAction extends AbstractController
     #[Route('/daily-notes', name: 'daily_notes', methods: ['GET'])]
     public function __invoke()
     {
-        return $this->render('daily_notes/daily_notes.html.twig');
+        return $this->render('daily_note/daily_notes.html.twig');
     }
 }
