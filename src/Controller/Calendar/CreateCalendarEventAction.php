@@ -21,7 +21,10 @@ final class CreateCalendarEventAction extends AbstractController
     {
         if ($request->getMethod() === 'POST') {
             $entity = new CalendarEvent(
-                text: $request->request->get('text'),
+                name: $request->request->get('name'),
+                day: $request->request->get('day'),
+                month: $request->request->get('month'),
+                year: $request->request->get('year'),
             );
 
             $this->em->persist($entity);

@@ -50,7 +50,7 @@ final class TestController extends AbstractController
             'entity' => CalendarEvent::class,
             'redirectRouteName' => 'calendar_event_list',
             'templatePath' => 'calendar/create_calendar_event.html.twig',
-            'fields' => ['text'],
+            'fields' => ['name', 'day', 'month', 'year'],
             'folder' => 'Calendar',
         ],
         [
