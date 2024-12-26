@@ -20,12 +20,12 @@ final class CreateTaskAction extends AbstractController
     public function __invoke(Request $request)
     {
         if ($request->getMethod() === 'POST') {
-            $task = new Task(
-                $request->request->get('name'),
-                $request->request->get('description'),
+            $entity = new Task(
+                name: $request->request->get('name'),
+                description: $request->request->get('description'),
             );
 
-            $this->em->persist($task);
+            $this->em->persist($entity);
             $this->em->flush();
 
             return $this->redirectToRoute('task_list');

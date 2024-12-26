@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Calendar\CalendarEvent;
 use App\Entity\DailyNote\DailyNote;
 use App\Entity\Note\Note;
 use App\Entity\Task\Task;
@@ -26,7 +27,7 @@ final class TestController extends AbstractController
             'redirectRouteName' => 'note_list',
             'templatePath' => 'note/create_note.html.twig',
             'fields' => ['text'],
-            'folder' => 'Note'
+            'folder' => 'Note',
         ],
         [
             'path' => __DIR__ . '/../Controller/DailyNote/',
@@ -38,8 +39,32 @@ final class TestController extends AbstractController
             'redirectRouteName' => 'daily_note_list',
             'templatePath' => 'daily_note/create_daily_note.html.twig',
             'fields' => ['text'],
-            'folder' => 'DailyNote'
-        ]
+            'folder' => 'DailyNote',
+        ],
+        [
+            'path' => __DIR__ . '/../Controller/Calendar/',
+            'template' => 'code_generator/create_controller.html.twig',
+            'fileName' => 'CreateCalendarEventAction',
+            'routePath' => '/calendar_events/create',
+            'routeName' => 'calendar_event_create',
+            'entity' => CalendarEvent::class,
+            'redirectRouteName' => 'calendar_event_list',
+            'templatePath' => 'calendar/create_calendar_event.html.twig',
+            'fields' => ['text'],
+            'folder' => 'Calendar',
+        ],
+        [
+            'path' => __DIR__ . '/../Controller/Task/',
+            'template' => 'code_generator/create_controller.html.twig',
+            'fileName' => 'CreateTaskAction',
+            'routePath' => '/tasks/create',
+            'routeName' => 'task_create',
+            'entity' => Task::class,
+            'redirectRouteName' => 'task_list',
+            'templatePath' => 'task/create_task.html.twig',
+            'fields' => ['name', 'description',],
+            'folder' => 'Task',
+        ],
     ];
 
     public function __construct(
@@ -73,6 +98,7 @@ final class TestController extends AbstractController
                     'redirectRouteName' => $file['redirectRouteName'],
                     'templatePath' => $file['templatePath'],
                     'fields' => $file['fields'],
+                    'folder' => $file['folder'],
                 ],
             );
         }
