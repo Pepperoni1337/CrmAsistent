@@ -6,6 +6,7 @@ use App\Entity\Calendar\CalendarEvent;
 use App\Entity\DailyNote\DailyNote;
 use App\Entity\Note\Note;
 use App\Entity\Task\Task;
+use App\Repository\CalendarEventRepository;
 use App\Service\FileGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -68,24 +69,28 @@ final class TestController extends AbstractController
     ];
 
     public function __construct(
-        //private readonly EntityManagerInterface $entityManager,
-        private readonly FileGenerator $fileGenerator,
+        private readonly EntityManagerInterface $entityManager,
+        //private readonly FileGenerator $fileGenerator,
 
     ) {
     }
 
     public function __invoke(): Response
     {
-        /*
-        $task = new Note('poznámka as ada a ' . random_int(1,50));
-        $this->entityManager->persist($task);
+
+        $entity = new CalendarEvent(
+            name: 'Silvestr',
+            day: 31,
+            month: 12,
+            year: 2024,
+        );
+        $this->entityManager->persist($entity);
         $this->entityManager->flush();
 
-        $test = $this->entityManager->getRepository(Note::class)->findAll();
+        $test = $this->entityManager->getRepository(CalendarEvent::class)->findAll();
 
         dd($test);
-*/
-
+/*
         foreach (self::FILES as $file) {
             $this->fileGenerator->generate(
                 $file['path'],
@@ -102,7 +107,7 @@ final class TestController extends AbstractController
                 ],
             );
         }
-
+*/
         return new JsonResponse([
             'message' => 'Hello world!',
         ]);

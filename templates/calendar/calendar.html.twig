@@ -2,6 +2,7 @@
 
 {% from '/common/macros/breadcrums.html.twig' import breadcrumbs %}
 {% from '/common/macros/heading.html.twig' import heading %}
+{% from '/calendar/macros/month_block.html.twig' import monthBlock %}
 
 {% set selectedMenuItem = 'calendar' %}
 
@@ -20,6 +21,9 @@
                     'Nadcházející události',
                 ) }}
                 <!-- end heading -->
+
+                {{ monthBlock('Události tento měsíc', thisMonthEvents) }}
+                {{ monthBlock('Události příští měsíc', nextMonthEvents) }}
             </div>
         </div>
     </main>

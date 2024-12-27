@@ -2,12 +2,13 @@
 
 namespace App\Entity\Calendar;
 
+use App\Repository\CalendarEventRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: CalendarEventRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 final class CalendarEvent
 {
