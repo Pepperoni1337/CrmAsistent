@@ -52,13 +52,12 @@ final class CalendarEvent
         int $year,
         CalendarEventType $type
     ) {
-        $this->id = Uuid::v6();
+        $this->id = Uuid::v7();
         $this->name = $name;
         $this->day = $day;
         $this->month = $month;
         $this->year = $year;
         $this->type = $type;
-        $this->updatedAt = new DateTimeImmutable();
     }
 
     public function getId(): Uuid
@@ -129,5 +128,12 @@ final class CalendarEvent
     public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
+    }
+
+    #[ORM\PreUpdate]
+    #[ORM\PrePersist]
+    public function updateTimestamp(): void
+    {
+        $this->updatedAt = new DateTimeImmutable();
     }
 }

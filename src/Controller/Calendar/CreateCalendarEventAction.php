@@ -3,6 +3,8 @@
 namespace App\Controller\Calendar;
 
 use App\Entity\Calendar\CalendarEvent;
+use App\Entity\Calendar\CalendarEventType;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,21 +18,25 @@ final class CreateCalendarEventAction extends AbstractController
     {
     }
 
-    #[Route('/calendar_events/create', name: 'calendar_event_create', methods: ['GET', 'POST'])]
+    #[Route('/calendar/create_event', name: 'calendar_event_create', methods: ['GET', 'POST'])]
     public function __invoke(Request $request)
     {
         if ($request->getMethod() === 'POST') {
+
+            $date = new DateTime($request->get('date'));
+
             $entity = new CalendarEvent(
                 name: $request->request->get('name'),
-                day: $request->request->get('day'),
-                month: $request->request->get('month'),
-                year: $request->request->get('year'),
+                day: $date->format('d'),
+                month: $date->format('m'),
+                year: $date->format('Y'),
+                type: CalendarEventType::OneTime,
             );
 
             $this->em->persist($entity);
             $this->em->flush();
 
-            return $this->redirectToRoute('calendar_event_list');
+            return $this->redirectToRoute('calendar');
         }
 
         return $this->render(
