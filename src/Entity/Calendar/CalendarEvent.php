@@ -36,11 +36,11 @@ final class CalendarEvent
     #[ORM\Column(type: Types::INTEGER)]
     private int $year;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true, enumType: CalendarEventType::class)]
-    private ?string $type = null;
+    #[ORM\Column(type: Types::STRING, length: 255, enumType: CalendarEventType::class)]
+    private CalendarEventType $type;
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true, enumType: CalendarEventPeriod::class)]
-    private ?string $period = null;
+    private ?CalendarEventPeriod $period = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
@@ -56,6 +56,7 @@ final class CalendarEvent
         $this->day = $day;
         $this->month = $month;
         $this->year = $year;
+        $this->type = CalendarEventType::OneTime;
         $this->updatedAt = new DateTimeImmutable();
     }
 
@@ -104,22 +105,22 @@ final class CalendarEvent
         $this->year = $year;
     }
 
-    public function getType(): ?string
+    public function getType(): CalendarEventType
     {
         return $this->type;
     }
 
-    public function setType(?string $type): void
+    public function setType(CalendarEventType $type): void
     {
         $this->type = $type;
     }
 
-    public function getPeriod(): ?string
+    public function getPeriod(): ?CalendarEventPeriod
     {
         return $this->period;
     }
 
-    public function setPeriod(?string $period): void
+    public function setPeriod(?CalendarEventPeriod $period): void
     {
         $this->period = $period;
     }
