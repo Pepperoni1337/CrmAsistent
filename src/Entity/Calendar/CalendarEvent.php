@@ -49,14 +49,15 @@ final class CalendarEvent
         string $name,
         int $day,
         int $month,
-        int $year
+        int $year,
+        CalendarEventType $type
     ) {
         $this->id = Uuid::v6();
         $this->name = $name;
         $this->day = $day;
         $this->month = $month;
         $this->year = $year;
-        $this->type = CalendarEventType::OneTime;
+        $this->type = $type;
         $this->updatedAt = new DateTimeImmutable();
     }
 

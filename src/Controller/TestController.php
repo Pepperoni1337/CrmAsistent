@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Calendar\CalendarEvent;
+use App\Entity\Calendar\CalendarEventType;
 use App\Entity\DailyNote\DailyNote;
 use App\Entity\Note\Note;
 use App\Entity\Task\Task;
@@ -83,6 +84,7 @@ final class TestController extends AbstractController
             day: 31,
             month: 12,
             year: 2024,
+            type: CalendarEventType::OneTime,
         );
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
