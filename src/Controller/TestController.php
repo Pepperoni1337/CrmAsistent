@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\BankAccount\BankTransaction;
+use App\Entity\BankAccount\BankTransactionStatus;
+use App\Entity\BankAccount\BankTransactionType;
 use App\Entity\Calendar\CalendarEvent;
 use App\Entity\Calendar\CalendarEventType;
 use App\Entity\DailyNote\DailyNote;
@@ -79,17 +82,17 @@ final class TestController extends AbstractController
     public function __invoke(): Response
     {
 
-        $entity = new CalendarEvent(
-            name: 'Silvestr',
-            day: 31,
-            month: 12,
-            year: 2024,
-            type: CalendarEventType::OneTime,
+        $entity = new BankTransaction(
+            name: 'Test',
+            date: new \DateTimeImmutable(),
+            type: BankTransactionType::Income,
+            amount: 12350,
+            status: BankTransactionStatus::Pending,
         );
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
 
-        $test = $this->entityManager->getRepository(CalendarEvent::class)->findAll();
+        $test = $this->entityManager->getRepository(BankTransaction::class)->findAll();
 
         dd($test);
 /*

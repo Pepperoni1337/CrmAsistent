@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\BankTransaction;
+namespace App\Entity\BankAccount;
 
 enum BankTransactionStatus: string
 {

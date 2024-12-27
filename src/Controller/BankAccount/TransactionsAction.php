@@ -2,6 +2,7 @@
 
 namespace App\Controller\BankAccount;
 
+use App\Entity\BankAccount\BankTransaction;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,13 @@ final class TransactionsAction extends AbstractController
     #[Route('/bank-account-transactions', name: 'bank_account_transactions', methods: ['GET'])]
     public function __invoke(): Response
     {
-        return $this->render('bank_account/transactions.html.twig');
+
+
+        return $this->render(
+            'bank_account/transactions.html.twig',
+            [
+                'transactions' => $this->entityManager->getRepository(BankTransaction::class)->findAll(),
+            ],
+        );
     }
 }
