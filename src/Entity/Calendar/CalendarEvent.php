@@ -39,9 +39,6 @@ final class CalendarEvent
     #[ORM\Column(type: Types::STRING, length: 255, enumType: CalendarEventType::class)]
     private CalendarEventType $type;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true, enumType: CalendarEventPeriod::class)]
-    private ?CalendarEventPeriod $period = null;
-
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
 
@@ -113,16 +110,6 @@ final class CalendarEvent
     public function setType(CalendarEventType $type): void
     {
         $this->type = $type;
-    }
-
-    public function getPeriod(): ?CalendarEventPeriod
-    {
-        return $this->period;
-    }
-
-    public function setPeriod(?CalendarEventPeriod $period): void
-    {
-        $this->period = $period;
     }
 
     public function getUpdatedAt(): DateTimeImmutable
