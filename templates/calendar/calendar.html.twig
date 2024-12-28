@@ -27,8 +27,7 @@
                 ) }}
                 <!-- end heading -->
                 {% for eventsData in events %}
-                    {% set name = eventsData.month ~ ' / ' ~ eventsData.year %}
-                    {{ monthBlock(name, eventsData.events) }}
+                    {{ monthBlock(eventsData.events, eventsData.month, eventsData.year) }}
                 {% endfor %}
             </div>
         </div>
