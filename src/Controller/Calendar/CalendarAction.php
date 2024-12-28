@@ -3,7 +3,11 @@
 namespace App\Controller\Calendar;
 
 use App\Repository\CalendarEventRepository;
+use App\Utils\DateTimeUtils;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -15,18 +19,36 @@ final class CalendarAction extends AbstractController
     }
 
     #[Route('/calendar', name: 'calendar', methods: ['GET'])]
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
-        $thisMonthEvents = $this->repository->findThisMonthEvents();
+        $offset = $request->query->getInt('offset', 0);
 
-        $nextMonthEvents = $this->repository->findNextMonthEvents();
+        $date = new DateTimeImmutable('first day of this month');
 
+        $date1 = DateTimeUtils::offsetMonth($date, $offset - 1);
+        $date2 = DateTimeUtils::offsetMonth($date, $offset);
+        $date3 = DateTimeUtils::offsetMonth($date, $offset + 1);
         return $this->render(
             'calendar/calendar.html.twig',
             [
-                'thisMonthEvents' => $thisMonthEvents,
-                'nextMonthEvents' => $nextMonthEvents,
+                'offset' => $offset,
+                'events' => [
+                    $this->getMonthData($date1),
+                    $this->getMonthData($date2),
+                    $this->getMonthData($date3),
+                ],
             ],
         );
+    }
+
+    private function getMonthData(DateTimeInterface $date): array
+    {
+        $events = $this->repository->findByMonthOffset($date);
+
+        return [
+            'month' => $date->format('m'),
+            'year' => $date->format('Y'),
+            'events' => $events,
+        ];
     }
 }

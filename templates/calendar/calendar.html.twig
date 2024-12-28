@@ -22,12 +22,14 @@
                     {
                         name: 'Přidat událost',
                         path: path('calendar_event_create'),
-                    }
+                    },
+                    offset,
                 ) }}
                 <!-- end heading -->
-
-                {{ monthBlock('Události tento měsíc', thisMonthEvents) }}
-                {{ monthBlock('Události příští měsíc', nextMonthEvents) }}
+                {% for eventsData in events %}
+                    {% set name = eventsData.month ~ ' / ' ~ eventsData.year %}
+                    {{ monthBlock(name, eventsData.events) }}
+                {% endfor %}
             </div>
         </div>
     </main>

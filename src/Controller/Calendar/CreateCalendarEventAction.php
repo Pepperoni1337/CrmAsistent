@@ -4,7 +4,7 @@ namespace App\Controller\Calendar;
 
 use App\Entity\Calendar\CalendarEvent;
 use App\Entity\Calendar\CalendarEventType;
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,13 +23,11 @@ final class CreateCalendarEventAction extends AbstractController
     {
         if ($request->getMethod() === 'POST') {
 
-            $date = new DateTime($request->get('date'));
+            $date = new DateTimeImmutable($request->get('date'));
 
             $entity = new CalendarEvent(
                 name: $request->request->get('name'),
-                day: $date->format('d'),
-                month: $date->format('m'),
-                year: $date->format('Y'),
+                date: $date,
                 type: CalendarEventType::OneTime,
             );
 

@@ -14,9 +14,7 @@ final class CalendarEvent
 {
     public const ID = 'id';
     public const NAME = 'name';
-    public const DAY = 'day';
-    public const MONTH = 'month';
-    public const YEAR = 'year';
+    public const DATE = 'date';
     public const TYPE = 'type';
     public const UPDATED_AT = 'updatedAt';
 
@@ -27,14 +25,8 @@ final class CalendarEvent
     #[ORM\Column(type: Types::STRING, length: 255)]
     private string $name;
 
-    #[ORM\Column(type: Types::INTEGER)]
-    private int $day;
-
-    #[ORM\Column(type: Types::INTEGER)]
-    private int $month;
-
-    #[ORM\Column(type: Types::INTEGER)]
-    private int $year;
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    private DateTimeImmutable $date;
 
     #[ORM\Column(type: Types::STRING, length: 255, enumType: CalendarEventType::class)]
     private CalendarEventType $type;
@@ -44,16 +36,12 @@ final class CalendarEvent
 
     public function __construct(
         string $name,
-        int $day,
-        int $month,
-        int $year,
+        DateTimeImmutable $date,
         CalendarEventType $type
     ) {
         $this->id = Uuid::v7();
         $this->name = $name;
-        $this->day = $day;
-        $this->month = $month;
-        $this->year = $year;
+        $this->date = $date;
         $this->type = $type;
     }
 
@@ -72,34 +60,14 @@ final class CalendarEvent
         $this->name = $name;
     }
 
-    public function getDay(): int
+    public function getDate(): DateTimeImmutable
     {
-        return $this->day;
+        return $this->date;
     }
 
-    public function setDay(int $day): void
+    public function setDate(DateTimeImmutable $date): void
     {
-        $this->day = $day;
-    }
-
-    public function getMonth(): int
-    {
-        return $this->month;
-    }
-
-    public function setMonth(int $month): void
-    {
-        $this->month = $month;
-    }
-
-    public function getYear(): int
-    {
-        return $this->year;
-    }
-
-    public function setYear(int $year): void
-    {
-        $this->year = $year;
+        $this->date = $date;
     }
 
     public function getType(): CalendarEventType

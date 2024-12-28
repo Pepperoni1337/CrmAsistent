@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Calendar\CalendarEvent;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,35 +15,14 @@ final class CalendarEventRepository extends ServiceEntityRepository
         parent::__construct($registry, CalendarEvent::class);
     }
 
-    public function findThisMonthEvents(): array
+    public function findByMonthOffset(DateTimeInterface $date): array
     {
         $qb = $this->createQueryBuilder('ce');
 
-        $qb
-            ->andWhere('ce.month = :month')
-            ->andWhere('ce.year = :year')
-            ->setParameter('month', date('m'))
-            ->setParameter('year', date('Y'))
-            ->orderBy('ce.year', 'ASC')
-            ->addOrderBy('ce.month', 'ASC')
-            ->addOrderBy('ce.day', 'ASC')
-        ;
-
-        return $qb->getQuery()->getResult();
-    }
-
-    public function findNextMonthEvents(): array
-    {
-        $qb = $this->createQueryBuilder('ce');
-
-        $nextMonth = (new DateTime('first day of next month'));
-
-        $qb
-            ->where('ce.month = :nextMonth')
-            ->andWhere('ce.year = :year')
-            ->setParameter('nextMonth', $nextMonth->format('m'))
-            ->setParameter('year', $nextMonth->format('Y'))
-            ->orderBy('ce.updatedAt', 'DESC');
+        $qb->andWhere('ce.date LIKE :date')
+            ->setParameter('date', $date->format('Y-m-') . '%')
+            ->orderBy('ce.date', 'ASC')
+            ->addOrderBy('ce.updatedAt', 'DESC');
 
         return $qb->getQuery()->getResult();
     }
