@@ -2,9 +2,11 @@
 
 namespace App\Controller\BankAccount;
 
+use App\Entity\BankAccount\BankTransaction;
 use App\Repository\BankTransactionRepository;
 use App\Utils\DateTimeUtils;
 use DateTimeImmutable;
+use DateTimeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,23 +36,72 @@ final class TransactionsAction extends AbstractController
             [
                 'offset' => $offset,
                 'transactions' => [
-                    [
-                        'month' => $date1->format('m'),
-                        'year' => $date1->format('Y'),
-                        'transactions' => $this->repository->findByMonthOffset($date1),
-                    ],
-                    [
-                        'month' => $date2->format('m'),
-                        'year' => $date2->format('Y'),
-                        'transactions' => $this->repository->findByMonthOffset($date2),
-                    ],
-                    [
-                        'month' => $date3->format('m'),
-                        'year' => $date3->format('Y'),
-                        'transactions' => $this->repository->findByMonthOffset($date3),
-                    ],
+                    $this->getMonthData($date1),
+                    $this->getMonthData($date2),
+                    $this->getMonthData($date3),
                 ],
             ],
         );
+    }
+
+    private function getMonthData(DateTimeInterface $date): array
+    {
+        $transactions = $this->repository->findByMonthOffset($date);
+
+        return [
+            'month' => $date->format('m'),
+            'year' => $date->format('Y'),
+            'transactions' => $transactions,
+            'incomeSum' => $this->getIncomeSum($transactions),
+            'expenseSum' => $this->getExpenseSum($transactions),
+            'totalSum' => $this->getTotalSum($transactions),
+        ];
+    }
+
+    /**
+     * @param BankTransaction[] $transactions
+     */
+    private function getIncomeSum(array $transactions): float
+    {
+        $sum = 0.0;
+        foreach ($transactions as $transaction) {
+            if ($transaction->getType()->isIncome()) {
+                $sum += $transaction->getAmount();
+            }
+        }
+
+        return $sum;
+    }
+
+    /**
+     * @param BankTransaction[] $transactions
+     */
+    private function getExpenseSum(array $transactions): float
+    {
+        $sum = 0.0;
+        foreach ($transactions as $transaction) {
+            if ($transaction->getType()->isExpense()) {
+                $sum += $transaction->getAmount();
+            }
+        }
+
+        return $sum;
+    }
+
+    /**
+     * @param BankTransaction[] $transactions
+     */
+    private function getTotalSum(array $transactions): float
+    {
+        $sum = 0.0;
+        foreach ($transactions as $transaction) {
+            if ($transaction->getType()->isIncome()) {
+                $sum += $transaction->getAmount();
+            } else {
+                $sum -= $transaction->getAmount();
+            }
+        }
+
+        return $sum;
     }
 }

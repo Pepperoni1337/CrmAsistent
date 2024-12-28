@@ -1,4 +1,4 @@
-{% macro monthBlock(name, transactions) %}
+{% macro monthBlock(name, transactions, totalIncome, totalExpense, totalSum) %}
     <div class="col-xl-4 mb-xl-0 my-3">
         <div class="card">
             <div class="card-header p-2 ps-3">
@@ -7,67 +7,40 @@
                 </div>
             </div>
             <hr class="dark horizontal my-0">
-            {% set totalIncome = 0 %}
-            {% set totalExpense = 0 %}
-            {% for transaction in transactions %}
-                <div class="d-flex flex-column">
-                    <div class="px-2 py-3  ps-3 d-flex flex-row justify-content-between align-items-center">
-                        <h3 class="mb-0 text-2xl text-dark-blue">
-                            {{ transaction.name }}
-                        </h3>
-                        {% if transaction.type.isIncome() %}
-                            <h3 class="mb-0 text-2xl text-dark-blue">
-                                + {{ transaction.amount }}
-                            </h3>
-                            {% set totalIncome = totalIncome + transaction.amount %}
-                        {% else %}
-                            <h3 class="mb-0 text-2xl text-warning">
-                                - {{ transaction.amount }}
-                            </h3>
-                            {% set totalExpense = totalExpense + transaction.amount %}
-                        {% endif %}
-                    </div>
-                </div>
-                <hr class="dark horizontal my-0">
-            {% endfor %}
+            {{ _self.monthBlockRow("Celkem", totalSum, totalSum < 0 ? 'expense' : 'income') }}
+            <hr class="dark horizontal my-0">
+            {{ _self.monthBlockRow("Celkem příjmy", totalIncome, 'income') }}
+            <hr class="dark horizontal my-0">
+            {{ _self.monthBlockRow("Celkem výdaje", totalExpense, 'expense') }}
             <div class="card-header p-2 ps-3">
                 <div class="d-flex justify-content-between p-3">
-                    <h3 class="text-2xl mb-0">Souhrn:</h3>
+                    <h3 class="text-2xl mb-0">Položky:</h3>
                 </div>
             </div>
             <hr class="dark horizontal my-0">
-            <div class="d-flex flex-column">
-                <div class="px-2 py-3  ps-3 d-flex flex-row justify-content-between align-items-center">
-                    <h3 class="mb-0 text-2xl text-dark-blue">
-                        Celkem příjmy:
-                    </h3>
-                    <h3 class="mb-0 text-2xl text-dark-blue">
-                        + {{ totalIncome }}
-                    </h3>
-                </div>
-            </div>
-            <hr class="dark horizontal my-0">
-            <div class="d-flex flex-column">
-                <div class="px-2 py-3  ps-3 d-flex flex-row justify-content-between align-items-center">
-                    <h3 class="mb-0 text-2xl text-dark-blue">
-                        Celkem výdaje:
-                    </h3>
-                    <h3 class="mb-0 text-2xl text-warning">
-                        - {{ totalExpense }}
-                    </h3>
-                </div>
-            </div>
-            <hr class="dark horizontal my-0">
-            <div class="d-flex flex-column">
-                <div class="px-2 py-3  ps-3 d-flex flex-row justify-content-between align-items-center">
-                    <h3 class="mb-0 text-2xl text-dark-blue">
-                        Celkem:
-                    </h3>
-                    <h3 class="mb-0 text-2xl text-warning">
-                        {{ totalIncome - totalExpense }}
-                    </h3>
-                </div>
-            </div>
+            {% for transaction in transactions %}
+                {{ _self.monthBlockRow(transaction.name, transaction.amount, transaction.type.value )}}
+                <hr class="dark horizontal my-0">
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro monthBlockRow(name, amount, type) %}
+    <div class="d-flex flex-column">
+        <div class="px-2 py-3  ps-3 d-flex flex-row justify-content-between align-items-center">
+            <h3 class="mb-0 text-2xl text-dark-blue">
+                {{ name }}
+            </h3>
+            {% if type is same as 'income' %}
+                <h3 class="mb-0 text-2xl text-dark-blue">
+                    + {{ amount }}
+                </h3>
+            {% else %}
+                <h3 class="mb-0 text-2xl text-warning">
+                    - {{ amount }}
+                </h3>
+            {% endif %}
         </div>
     </div>
 {% endmacro %}

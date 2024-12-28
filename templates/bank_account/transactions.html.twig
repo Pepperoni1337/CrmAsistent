@@ -19,13 +19,22 @@
                 {{ heading(
                     'Rozpočet',
                     'Nadcházející příjmy a výdaje',
-                    null,
+                    {
+                        name: 'Přidat zázmam',
+                        path: path('bank_account_transactions_create'),
+                    },
                     offset,
                 ) }}
                 <!-- end heading -->
-                {% for transactionList in transactions %}
-                    {% set name = transactionList.month ~ ' / ' ~ transactionList.year %}
-                    {{ monthBlock(name, transactionList.transactions) }}
+                {% for transactionData in transactions %}
+                    {% set name = transactionData.month ~ ' / ' ~ transactionData.year %}
+                    {{ monthBlock(
+                        name,
+                        transactionData.transactions,
+                        transactionData.incomeSum,
+                        transactionData.expenseSum,
+                        transactionData.totalSum,
+                    ) }}
                 {% endfor %}
             </div>
         </div>
