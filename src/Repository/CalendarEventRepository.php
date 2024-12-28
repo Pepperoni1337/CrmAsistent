@@ -7,7 +7,7 @@ use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-class CalendarEventRepository extends ServiceEntityRepository
+final class CalendarEventRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

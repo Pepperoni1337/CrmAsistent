@@ -19,10 +19,15 @@
                 {{ heading(
                     'Rozpočet',
                     'Nadcházející příjmy a výdaje',
+                    null,
+                    offset,
                 ) }}
                 <!-- end heading -->
+                {% for transactionList in transactions %}
+                    {% set name = transactionList.month ~ ' / ' ~ transactionList.year %}
+                    {{ monthBlock(name, transactionList.transactions) }}
+                {% endfor %}
             </div>
-            {{ monthBlock('Platby tento měsíc', transactions) }}
         </div>
     </main>
 {% endblock %}

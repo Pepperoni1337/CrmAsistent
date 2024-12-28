@@ -2,12 +2,13 @@
 
 namespace App\Entity\BankAccount;
 
+use App\Repository\BankTransactionRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: BankTransactionRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 final class BankTransaction
 {

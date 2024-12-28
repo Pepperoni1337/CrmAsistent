@@ -1,4 +1,4 @@
-{% macro heading(name, info, action = null) %}
+{% macro heading(name, info, action = null, offset = null) %}
     <div class="px-5 d-flex flex-row justify-content-between">
         <div>
             <h3 class="mb-0 text-4xl font-weight-bolder">{{ name }}</h3>
@@ -6,6 +6,16 @@
                 {{ info }}
             </p>
         </div>
+        {% if offset is not null %}
+            <div class="d-flex ">
+                <a class="p-2 m-1 icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg text-light" href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge({'offset': offset-1})) }}" type="button">
+                    <
+                </a>
+                <a class="p-2 m-1 icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg text-light" href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge({'offset': offset+1})) }}" type="button">
+                    >
+                </a>
+            </div>
+        {% endif %}
         {% if action is not null %}
             <div>
                 <a class="btn btn-outline-dark mt-4 w-100" href="{{ action.path }}" type="button">{{ action.name }}</a>
