@@ -20,6 +20,8 @@ services:
     volumes:
       - ./project/:/var/www/html/
       - ./docker/logs/php.log:/var/log/fpm-php.www.log
+    ports:
+      - "9000:9000"
   db:
     container_name: ${PROJECT_NAME}_mysql
     image: mysql
