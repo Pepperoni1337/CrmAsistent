@@ -25,10 +25,17 @@ final class CreateCalendarEventAction extends AbstractController
 
             $date = new DateTimeImmutable($request->get('date'));
 
+            $type = match ($request->get('type')) {
+                'one-time' => CalendarEventType::OneTime,
+                'monthly' => CalendarEventType::Monthly,
+                'quarterly' => CalendarEventType::Quarterly,
+                'yearly' => CalendarEventType::Yearly,
+            };
+
             $entity = new CalendarEvent(
                 name: $request->request->get('name'),
                 date: $date,
-                type: CalendarEventType::OneTime,
+                type: $type,
             );
 
             $this->em->persist($entity);
