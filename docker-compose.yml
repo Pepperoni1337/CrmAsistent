@@ -1,0 +1,37 @@
+services:
+  nginx:
+    container_name: ${PROJECT_NAME}_nginx
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    image: peppe:nginx
+    volumes:
+      - ./project/:/var/www/html/
+      - ./docker/nginx/config/:/etc/nginx/conf.d/
+      - ./docker/logs/nginx:/var/log/nginx/
+    ports:
+      - "80:80"
+  php:
+    container_name: ${PROJECT_NAME}_php
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    image: peppe:php
+    volumes:
+      - ./project/:/var/www/html/
+      - ./docker/logs/php.log:/var/log/fpm-php.www.log
+  db:
+    container_name: ${PROJECT_NAME}_mysql
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
