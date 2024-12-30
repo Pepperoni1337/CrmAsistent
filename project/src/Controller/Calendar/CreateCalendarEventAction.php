@@ -26,7 +26,7 @@ final class CreateCalendarEventAction extends AbstractController
             $date = new DateTimeImmutable($request->get('date'));
 
             $type = match ($request->get('type')) {
-                'one-time' => CalendarEventType::OneTime,
+                'one_time' => CalendarEventType::OneTime,
                 'monthly' => CalendarEventType::Monthly,
                 'quarterly' => CalendarEventType::Quarterly,
                 'yearly' => CalendarEventType::Yearly,
