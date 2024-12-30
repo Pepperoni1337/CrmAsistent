@@ -1,0 +1,34 @@
+{% macro monthBlock(events, month, year) %}
+    <div class="col-xl-4 mb-xl-0 my-3">
+        <div class="card">
+            <div class="card-header p-2 ps-3">
+                <div class="d-flex justify-content-between p-3">
+                    <h3 class="text-2xl mb-0">{{ month ~ ' / ' ~ year }}</h3>
+                </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            {% for event in events %}
+                {{ _self.monthBlockRow(event, year, month) }}
+                <hr class="dark horizontal my-0">
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro monthBlockRow(event, year, month) %}
+    <div class="d-flex flex-column">
+        <div class="px-2 py-3 ps-3 d-flex flex-row justify-content-between align-items-center">
+            {% set currentDate = "now"|date("Y-m-d") %}
+            {% set customDate = date(year ~ '-' ~ month ~ '-' ~ event.date.format("d"))|date("Y-m-d") %}
+            {% if customDate < currentDate %}
+                <h3 class="mb-0 text-2xl text-black-50">
+                    {{ event.name }}
+                </h3>
+            {% else %}
+                <h3 class="mb-0 text-2xl text-dark">
+                    {{ event.name }}
+                </h3>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}

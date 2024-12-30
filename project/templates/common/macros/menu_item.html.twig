@@ -1,0 +1,15 @@
+{% macro menu_item(name, path, active) %}
+    {% if active %}
+        <li class="nav-item">
+            <a class="nav-link p-3 active bg-gradient-dark text-white" href="{{ path }}">
+                <span class="nav-link-text ms-1">{{ name }}</span>
+            </a>
+        </li>
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link p-3 text-dark" href="{{ path }}">
+                <span class="nav-link-text ms-1">{{ name }}</span>
+            </a>
+        </li>
+    {% endif %}
+{% endmacro %}

@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+{% from '/common/macros/breadcrums.html.twig' import breadcrumbs %}
+{% from '/common/macros/heading.html.twig' import heading %}
+{% from '/note/macros/note_block.html.twig' import noteBlock %}
+
+{% set selectedMenuItem = 'notes' %}
+
+{% block content %}
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <!-- Navbar -->
+        {{ breadcrumbs([
+            { name: 'Poznámmky' }
+        ]) }}
+        <!-- End Navbar -->
+        <div class="container-fluid py-2">
+            <div class="row">
+                <!-- heading -->
+                {{ heading(
+                    'Poznámky',
+                    'Náhodné poznámky',
+                    {
+                        name: 'Přidat poznámku',
+                        path: path('note_create'),
+                    }
+                ) }}
+                <!-- end heading -->
+                {% for note in notes %}
+                    {{ noteBlock(note.text, note.createdAt, note.updatedAt) }}
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+{% endblock %}
