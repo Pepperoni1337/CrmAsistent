@@ -19,26 +19,31 @@
             </div>
             <hr class="dark horizontal my-0">
             {% for transaction in transactions %}
-                {{ _self.monthBlockRow(transaction.name, transaction.amount, transaction.type.value )}}
+                {{ _self.monthBlockRow(transaction.name, transaction.amount, transaction.type.value, transaction.date|date("d. m. Y")) }}
                 <hr class="dark horizontal my-0">
             {% endfor %}
         </div>
     </div>
 {% endmacro %}
 
-{% macro monthBlockRow(name, amount, type) %}
+{% macro monthBlockRow(name, amount, type, note = null) %}
     <div class="d-flex flex-column">
         <div class="px-2 py-3  ps-3 d-flex flex-row justify-content-between align-items-center">
-            <h3 class="mb-0 text-2xl text-dark-blue">
-                {{ name }}
-            </h3>
+            <div>
+                <h3 class="mb-0 text-2xl text-dark-blue">
+                    {{ name }}
+                </h3>
+                {% if note is not null %}
+                    <p class="mb-0 text-muted">{{ note }}</p>
+                {% endif %}
+            </div>
             {% if type is same as 'income' %}
                 <h3 class="mb-0 text-2xl text-dark-blue">
-                    + {{ amount }}
+                    + {{ amount|abs }}
                 </h3>
             {% else %}
                 <h3 class="mb-0 text-2xl text-warning">
-                    - {{ amount }}
+                    - {{ amount|abs }}
                 </h3>
             {% endif %}
         </div>
