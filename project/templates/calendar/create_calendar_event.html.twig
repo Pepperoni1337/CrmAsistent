@@ -3,21 +3,21 @@
 {% from '/common/macros/breadcrums.html.twig' import breadcrumbs %}
 {% from '/common/macros/heading.html.twig' import heading %}
 
-{% set selectedMenuItem = 'tasks' %}
+{% set selectedMenuItem = 'calendar' %}
 
 {% block content %}
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
         {{ breadcrumbs([
-            { name: 'Úkoly', url: path('task_list') },
-            { name: 'Nový úkol' }
+            { name: 'Kalendář', url: path('calendar') },
+            { name: 'Nová událost' }
         ]) }}
         <!-- End Navbar -->
         <div class="container-fluid py-2">
             <div class="row">
                 <!-- heading -->
                 {{ heading(
-                    'Přidání nové udáosti',
+                    'Přidání nové události',
                     ''
                 ) }}
                 <!-- end heading -->
