@@ -82,17 +82,13 @@ final class TestController extends AbstractController
     public function __invoke(): Response
     {
 
-        $entity = new BankTransaction(
-            name: 'Test',
-            date: new \DateTimeImmutable(),
-            type: BankTransactionType::Income,
-            amount: 12350,
-            status: BankTransactionStatus::Pending,
+        $entity = new DailyNote(
+            text: 'testadssdasd',
         );
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
 
-        $test = $this->entityManager->getRepository(BankTransaction::class)->findAll();
+        $test = $this->entityManager->getRepository(DailyNote::class)->findAll();
 
         dd($test);
 /*

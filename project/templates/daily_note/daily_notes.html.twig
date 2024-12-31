@@ -2,6 +2,7 @@
 
 {% from '/common/macros/breadcrums.html.twig' import breadcrumbs %}
 {% from '/common/macros/heading.html.twig' import heading %}
+{% from '/daily_note/macros/note_block.html.twig' import noteBlock %}
 
 {% set selectedMenuItem = 'daily_notes' %}
 
@@ -21,6 +22,9 @@
                 ) }}
                 <!-- end heading -->
             </div>
+            {% for note in daily_notes %}
+                {{ noteBlock(note.text, note.createdAt, note.updatedAt) }}
+            {% endfor %}
         </div>
     </main>
 {% endblock %}
