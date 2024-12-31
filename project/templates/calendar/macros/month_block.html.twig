@@ -21,7 +21,14 @@
             {% set currentDate = "now"|date("Y-m-d") %}
             {% set customDate = date(year ~ '-' ~ month ~ '-' ~ event.date.format("d"))|date("Y-m-d") %}
             <div>
-                <h3 class="mb-0 text-2xl {{ customDate < currentDate ? "text-black-50" : "text-dark"}}">
+                {% if customDate < currentDate %}
+                    {% set textColor = "text-black-50" %}
+                {% elseif customDate is same as currentDate %}
+                    {% set textColor = "text-dark-blue" %}
+                {% else %}
+                    {% set textColor = "text-dark" %}
+                {% endif %}
+                <h3 class="mb-0 text-2xl {{ textColor }}">
                     {% if event.type.value is same as "yearly" %}
                         {% set yearDiff = customDate|date("Y") - event.date|date("Y") %}
                         {{ event.name }} <span class="text-black-50">{{ yearDiff }}</span>
