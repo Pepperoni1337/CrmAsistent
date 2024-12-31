@@ -22,12 +22,15 @@
                     {
                         name: 'Přidat denní poznámku',
                         path: path('daily_note_create'),
-                    }
+                    },
+                    offset
                 ) }}
                 <!-- end heading -->
             </div>
-            {% for note in daily_notes %}
-                {{ noteBlock(note.text, note.createdAt, note.updatedAt) }}
+            {% for note_data in daily_notes %}
+                {% for note in note_data.daily_notes %}
+                    {{ noteBlock(note.text, note.createdAt, note.updatedAt) }}
+                {% endfor %}
             {% endfor %}
         </div>
     </main>

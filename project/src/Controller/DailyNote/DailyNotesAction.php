@@ -2,27 +2,54 @@
 
 namespace App\Controller\DailyNote;
 
-use App\Entity\DailyNote\DailyNote;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\DailyNoteRepository;
+use App\Utils\DateTimeUtils;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class DailyNotesAction extends AbstractController
 {
     public function __construct(
-        private readonly EntityManagerInterface $em
+        private readonly DailyNoteRepository $repository
     )
     {
     }
 
     #[Route('/daily-notes', name: 'daily_notes', methods: ['GET'])]
-    public function __invoke()
+    public function __invoke(Request $request)
     {
+        $offset = $request->query->getInt('offset', 0);
+
+
+        $date = new DateTimeImmutable('now');
+
+        $date1 = DateTimeUtils::offsetDay($date, $offset - 1);
+        $date2 = DateTimeUtils::offsetDay($date, $offset);
+        $date3 = DateTimeUtils::offsetDay($date, $offset + 1);
+
         return $this->render(
             'daily_note/daily_notes.html.twig',
             [
-                'daily_notes' => $this->em->getRepository(DailyNote::class)->findAll(),
-            ]
+                'offset' => $offset,
+                'daily_notes' => [
+                    $this->getDayData($date1),
+                    $this->getDayData($date2),
+                    $this->getDayData($date3),
+                ],
+            ],
         );
+    }
+
+    private function getDayData(DateTimeInterface $date): array
+    {
+        $daily_notes = $this->repository->findByDay($date);
+
+        return [
+            'date' => $date,
+            'daily_notes' => $daily_notes,
+        ];
     }
 }

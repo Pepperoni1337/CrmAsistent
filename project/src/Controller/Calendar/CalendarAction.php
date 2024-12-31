@@ -43,7 +43,7 @@ final class CalendarAction extends AbstractController
 
     private function getMonthData(DateTimeInterface $date): array
     {
-        $events = $this->repository->findByMonthOffset($date);
+        $events = $this->repository->findByMonth($date);
 
         return [
             'month' => $date->format('m'),

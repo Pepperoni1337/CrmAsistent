@@ -25,6 +25,7 @@ doctrine:
         dql:
             datetime_functions:
                 day: DoctrineExtensions\Query\Mysql\Day
+                date: DoctrineExtensions\Query\Mysql\Date
 when@test:
     doctrine:
         dbal:

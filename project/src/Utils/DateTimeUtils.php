@@ -15,4 +15,13 @@ final class DateTimeUtils
 
         return $newDate;
     }
+
+    public static function offsetDay(DateTimeInterface $date, int $offset): DateTimeInterface
+    {
+        $newDate = new DateTime($date->format('Y-m-d'));
+
+        $newDate->modify(sprintf('%d day', $offset));
+
+        return $newDate;
+    }
 }

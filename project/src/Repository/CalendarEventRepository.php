@@ -16,7 +16,7 @@ final class CalendarEventRepository extends ServiceEntityRepository
         parent::__construct($registry, CalendarEvent::class);
     }
 
-    public function findByMonthOffset(DateTimeInterface $date): array
+    public function findByMonth(DateTimeInterface $date): array
     {
         $date2 = new DateTime($date->format('Y-m-d'));
         $date2->modify('+3 month');
