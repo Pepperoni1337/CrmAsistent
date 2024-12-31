@@ -10,10 +10,12 @@ final class FileGenerator
     public function __construct(
         private Environment $twig,
         private readonly Filesystem $filesystem
-    )
-    {
+    ) {
     }
 
+    /**
+     * @param array<string, mixed> $variables
+     */
     public function generate(string $path, string $templatePath, array $variables): void
     {
         $template = $this->twig->load($templatePath);

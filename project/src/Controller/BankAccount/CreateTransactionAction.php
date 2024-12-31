@@ -9,6 +9,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class CreateTransactionAction extends AbstractController
@@ -20,7 +21,7 @@ final class CreateTransactionAction extends AbstractController
     }
 
     #[Route('/bank-account-transactions/create_transaction', name: 'bank_account_transactions_create', methods: ['GET', 'POST'])]
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): Response
     {
         if ($request->getMethod() === 'POST') {
 

@@ -6,6 +6,7 @@ use App\Entity\DailyNote\DailyNote;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class CreateDailyNoteAction extends AbstractController
@@ -17,7 +18,7 @@ final class CreateDailyNoteAction extends AbstractController
     }
 
     #[Route('/daily_notes/create', name: 'daily_note_create', methods: ['GET', 'POST'])]
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): Response
     {
         if ($request->getMethod() === 'POST') {
             $entity = new DailyNote(

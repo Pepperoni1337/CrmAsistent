@@ -2,6 +2,7 @@
 
 namespace App\Controller\Calendar;
 
+use App\Entity\Calendar\CalendarEvent;
 use App\Repository\CalendarEventRepository;
 use App\Utils\DateTimeUtils;
 use DateTimeImmutable;
@@ -41,6 +42,9 @@ final class CalendarAction extends AbstractController
         );
     }
 
+    /**
+     * @return array<string, string|CalendarEvent[]>
+     */
     private function getMonthData(DateTimeInterface $date): array
     {
         $events = $this->repository->findByMonth($date);

@@ -7,6 +7,9 @@ use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends ServiceEntityRepository<DailyNote>
+ */
 final class DailyNoteRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -14,6 +17,9 @@ final class DailyNoteRepository extends ServiceEntityRepository
         parent::__construct($registry, DailyNote::class);
     }
 
+    /**
+     * @return DailyNote[]
+     */
     public function findByDay(DateTimeInterface $date): array {
         $qb = $this->createQueryBuilder('dn');
 

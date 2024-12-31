@@ -9,6 +9,9 @@ use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends ServiceEntityRepository<CalendarEvent>
+ */
 final class CalendarEventRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -16,6 +19,9 @@ final class CalendarEventRepository extends ServiceEntityRepository
         parent::__construct($registry, CalendarEvent::class);
     }
 
+    /**
+     * @return CalendarEvent[]
+     */
     public function findByMonth(DateTimeInterface $date): array
     {
         $date2 = new DateTime($date->format('Y-m-d'));

@@ -2,12 +2,14 @@
 
 namespace App\Controller\DailyNote;
 
+use App\Entity\DailyNote\DailyNote;
 use App\Repository\DailyNoteRepository;
 use App\Utils\DateTimeUtils;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class DailyNotesAction extends AbstractController
@@ -19,7 +21,7 @@ final class DailyNotesAction extends AbstractController
     }
 
     #[Route('/daily-notes', name: 'daily_notes', methods: ['GET'])]
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): Response
     {
         $offset = $request->query->getInt('offset', 0);
 
@@ -43,6 +45,9 @@ final class DailyNotesAction extends AbstractController
         );
     }
 
+    /**
+     * @return array<string, DateTimeInterface|DailyNote[]>
+     */
     private function getDayData(DateTimeInterface $date): array
     {
         $daily_notes = $this->repository->findByDay($date);

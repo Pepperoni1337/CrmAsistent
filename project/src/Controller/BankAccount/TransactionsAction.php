@@ -44,9 +44,12 @@ final class TransactionsAction extends AbstractController
         );
     }
 
+    /**
+     * @return array<string, string|float|BankTransaction[]>
+     */
     private function getMonthData(DateTimeInterface $date): array
     {
-        $transactions = $this->repository->findByMonthOffset($date);
+        $transactions = $this->repository->findByMonth($date);
 
         return [
             'month' => $date->format('m'),

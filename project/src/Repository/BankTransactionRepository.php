@@ -7,6 +7,9 @@ use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends ServiceEntityRepository<BankTransaction>
+ */
 final class BankTransactionRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -14,7 +17,10 @@ final class BankTransactionRepository extends ServiceEntityRepository
         parent::__construct($registry, BankTransaction::class);
     }
 
-    public function findByMonthOffset(DateTimeInterface $date): array
+    /**
+     * @return BankTransaction[]
+     */
+    public function findByMonth(DateTimeInterface $date): array
     {
         $qb = $this->createQueryBuilder('bt');
 

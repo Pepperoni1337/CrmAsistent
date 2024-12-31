@@ -6,8 +6,10 @@ use App\Entity\Calendar\CalendarEvent;
 use App\Entity\Calendar\CalendarEventType;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class CreateCalendarEventAction extends AbstractController
@@ -19,7 +21,7 @@ final class CreateCalendarEventAction extends AbstractController
     }
 
     #[Route('/calendar/create_event', name: 'calendar_event_create', methods: ['GET', 'POST'])]
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): Response
     {
         if ($request->getMethod() === 'POST') {
 
@@ -30,6 +32,7 @@ final class CreateCalendarEventAction extends AbstractController
                 'monthly' => CalendarEventType::Monthly,
                 'quarterly' => CalendarEventType::Quarterly,
                 'yearly' => CalendarEventType::Yearly,
+                default => throw new InvalidArgumentException('Invalid type'),
             };
 
             $entity = new CalendarEvent(
