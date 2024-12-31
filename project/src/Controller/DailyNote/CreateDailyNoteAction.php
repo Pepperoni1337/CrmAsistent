@@ -27,7 +27,7 @@ final class CreateDailyNoteAction extends AbstractController
             $this->em->persist($entity);
             $this->em->flush();
 
-            return $this->redirectToRoute('daily_note_list');
+            return $this->redirectToRoute('daily_notes');
         }
 
         return $this->render(

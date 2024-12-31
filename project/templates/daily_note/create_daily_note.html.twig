@@ -3,32 +3,28 @@
 {% from '/common/macros/breadcrums.html.twig' import breadcrumbs %}
 {% from '/common/macros/heading.html.twig' import heading %}
 
-{% set selectedMenuItem = 'tasks' %}
+{% set selectedMenuItem = 'daily_notes' %}
 
 {% block content %}
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
         {{ breadcrumbs([
-            { name: 'Poznámky', url: path('note_list') },
-            { name: 'Nová poznámka' }
+            { name: 'Denní poznámky', url: path('daily_notes') },
+            { name: 'Nová denní poznámka' }
         ]) }}
         <!-- End Navbar -->
         <div class="container-fluid py-2">
             <div class="row">
                 <!-- heading -->
                 {{ heading(
-                    'Vytvoření nové poznámky',
-                    '',
-                    {
-                        name: 'Přidat denní poznámku',
-                        path: path('daily_note_create'),
-                    }
+                    'Vytvoření nové denní poznámky',
+                    ''
                 ) }}
                 <!-- end heading -->
                 <div class="ms-3">
                     <div class="col-xl-4 mb-xl-0 mb-4">
                         <div class="card">
-                            <form action="{{ path('note_create') }}" method="post">
+                            <form action="{{ path('daily_note_create') }}" method="post">
                                 <hr class="dark horizontal my-0">
                                 <div class="p-3">
                                     <label for="text" class="p-3">Poznámka</label>
