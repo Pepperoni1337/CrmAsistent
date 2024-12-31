@@ -20,7 +20,8 @@ final class DailyNoteRepository extends ServiceEntityRepository
         $qb->where(
             $qb->expr()->eq('date(dn.createdAt)', ':date')
         )
-        ->setParameter('date', $date->format('Y-m-d'));
+        ->setParameter('date', $date->format('Y-m-d'))
+        ->orderBy('dn.createdAt', 'DESC');
 
         return $qb->getQuery()->getResult();
     }
