@@ -8,7 +8,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
-final class Project
+class Project
 {
     public const ID = 'id';
     public const NAME = 'name';

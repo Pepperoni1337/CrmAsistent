@@ -9,7 +9,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
-final class DailyNote
+class DailyNote
 {
     public const ID = 'id';
     public const TEXT = 'text';

@@ -10,7 +10,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: CalendarEventRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-final class CalendarEvent
+class CalendarEvent
 {
     public const ID = 'id';
     public const NAME = 'name';

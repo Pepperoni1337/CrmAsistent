@@ -10,7 +10,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: BankTransactionRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-final class BankTransaction
+class BankTransaction
 {
     public const ID = 'id';
     public const NAME = 'name';

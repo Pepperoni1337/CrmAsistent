@@ -10,7 +10,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
-final class Note
+class Note
 {
     public const ID = 'id';
     public const TEXT = 'text';
@@ -31,14 +31,16 @@ final class Note
     private DateTimeImmutable $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: Project::class)]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Project $project = null;
+    #[ORM\JoinColumn(nullable: false)]
+    private Project $project;
 
     public function __construct(
-        string $text
+        string $text,
+        Project $project
     ) {
         $this->id = Uuid::v7();
         $this->text = $text;
+        $this->project = $project;
         $this->createdAt = new DateTimeImmutable();
     }
 
@@ -67,12 +69,12 @@ final class Note
         return $this->updatedAt;
     }
 
-    public function getProject(): ?Project
+    public function getProject(): Project
     {
         return $this->project;
     }
 
-    public function setProject(?Project $project): void
+    public function setProject(Project $project): void
     {
         $this->project = $project;
     }

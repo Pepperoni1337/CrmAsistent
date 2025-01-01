@@ -10,7 +10,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
-final class Task
+class Task
 {
     public const ID = 'id';
     public const NAME = 'name';

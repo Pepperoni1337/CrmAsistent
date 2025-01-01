@@ -9,6 +9,7 @@ use App\Entity\Calendar\CalendarEvent;
 use App\Entity\Calendar\CalendarEventType;
 use App\Entity\DailyNote\DailyNote;
 use App\Entity\Note\Note;
+use App\Entity\Project\Project;
 use App\Entity\Task\Task;
 use App\Repository\CalendarEventRepository;
 use App\Service\FileGenerator;
@@ -81,14 +82,24 @@ final class TestController extends AbstractController
 
     public function __invoke(): Response
     {
-
+/*
         $entity = new DailyNote(
             text: 'testadssdasd',
         );
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
+*/
+        $project = $this->entityManager->getRepository(Project::class)->findOneBy([
+            'name' => 'CRM Asistent'
+        ]);
 
-        $test = $this->entityManager->getRepository(DailyNote::class)->findAll();
+        $test = $this->entityManager->getRepository(Note::class)->findAll();
+
+        foreach ($test as $t) {
+            $t->setProject($project);
+            $this->entityManager->persist($t);
+        }
+        $this->entityManager->flush();
 
         dd($test);
 /*
