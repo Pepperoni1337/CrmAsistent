@@ -30,21 +30,21 @@
     <div class="d-flex flex-column">
         <div class="px-2 py-3  ps-3 d-flex flex-row justify-content-between align-items-center">
             <div>
-                <h3 class="mb-0 text-2xl text-dark-blue">
+                <h5 class="mb-0 text-black-50">
                     {{ name }}
-                </h3>
+                </h5>
                 {% if note is not null %}
                     <p class="mb-0 text-muted">{{ note }}</p>
                 {% endif %}
             </div>
             {% if type is same as 'income' %}
-                <h3 class="mb-0 text-2xl text-dark-blue">
+                <h5 class="mb-0 text-dark-blue">
                     + {{ amount|abs }}
-                </h3>
+                </h5>
             {% else %}
-                <h3 class="mb-0 text-2xl text-warning">
+                <h5 class="mb-0 text-warning">
                     - {{ amount|abs }}
-                </h3>
+                </h5>
             {% endif %}
         </div>
     </div>

@@ -28,14 +28,14 @@
                 {% else %}
                     {% set textColor = "text-dark" %}
                 {% endif %}
-                <h3 class="mb-0 text-2xl {{ textColor }}">
+                <h5 class="mb-0 {{ textColor }}">
                     {% if event.type.value is same as "yearly" %}
                         {% set yearDiff = customDate|date("Y") - event.date|date("Y") %}
                         {{ event.name }} <span class="text-black-50">{{ yearDiff }}</span>
                     {% else %}
                         {{ event.name }}
                     {% endif %}
-                </h3>
+                </h5>
                 <p class="mb-0 text-muted">{{ customDate|date("d. m. Y") }}</p>
             </div>
         </div>
