@@ -23,13 +23,16 @@
         {% endif %}
         {% if projects is not null %}
         <form action="" method="get">
-            <select name="project_id" onchange="this.form.submit()">
-                <option value="">Všechny projekty</option>
-                {% for project in projects %}
-                    {% set slected = project.id is same as project_id %}
-                    <option value="{{ project.id }}" {{ slected ? "selected" : "" }}>{{ project.name }}</option>
-                {% endfor %}
-            </select>
+            <label>
+                Projekt:
+                <select name="project_id" onchange="this.form.submit()">
+                    <option value="">Všechny projekty</option>
+                    {% for project in projects %}
+                        {% set slected = project.id is same as project_id %}
+                        <option value="{{ project.id }}" {{ slected ? "selected" : "" }}>{{ project.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
         </form>
         {% endif %}
     </div>
