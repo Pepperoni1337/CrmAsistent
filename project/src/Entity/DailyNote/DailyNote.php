@@ -36,10 +36,13 @@ class DailyNote
     private Project $project;
 
     public function __construct(
-        string $text
+        string $text,
+        Project $project
+
     ) {
         $this->id = Uuid::v7();
         $this->text = $text;
+        $this->project = $project;
         $this->createdAt = new DateTimeImmutable();
     }
 

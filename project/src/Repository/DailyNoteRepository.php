@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\DailyNote\DailyNote;
+use App\Entity\Project\Project;
 use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -20,14 +21,20 @@ final class DailyNoteRepository extends ServiceEntityRepository
     /**
      * @return DailyNote[]
      */
-    public function findByDay(DateTimeInterface $date): array {
+    public function findByDayAndProject(DateTimeInterface $date, ?Project $project): array {
         $qb = $this->createQueryBuilder('dn');
 
         $qb->where(
             $qb->expr()->eq('date(dn.createdAt)', ':date')
-        )
-        ->setParameter('date', $date->format('Y-m-d'))
-        ->orderBy('dn.createdAt', 'DESC');
+        );
+        $qb->setParameter('date', $date->format('Y-m-d'));
+
+        if($project !== null) {
+            $qb->andWhere('dn.project = :project')
+                ->setParameter('project', $project->getId(), 'uuid');
+        }
+
+        $qb->orderBy('dn.createdAt', 'DESC');
 
         return $qb->getQuery()->getResult();
     }

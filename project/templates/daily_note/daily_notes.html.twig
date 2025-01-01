@@ -24,7 +24,9 @@
                         name: 'Přidat denní poznámku',
                         path: path('daily_note_create'),
                     },
-                    offset
+                    offset,
+                    projects,
+                    project.id ?? null
                 ) }}
                 <!-- end heading -->
                 {% for note_data in daily_notes %}

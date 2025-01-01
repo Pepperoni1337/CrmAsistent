@@ -3,19 +3,23 @@
 namespace App\Controller\DailyNote;
 
 use App\Entity\DailyNote\DailyNote;
+use App\Entity\Project\Project;
 use App\Repository\DailyNoteRepository;
 use App\Utils\DateTimeUtils;
 use DateTimeImmutable;
 use DateTimeInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Uid\Uuid;
 
 final class DailyNotesAction extends AbstractController
 {
     public function __construct(
-        private readonly DailyNoteRepository $repository
+        private readonly DailyNoteRepository $repository,
+        private readonly EntityManagerInterface $em
     )
     {
     }
@@ -25,6 +29,13 @@ final class DailyNotesAction extends AbstractController
     {
         $offset = $request->query->getInt('offset', 0);
 
+        $projectId = $request->get('project_id');
+        $project = null;
+        if ($projectId !== null && $projectId !== '') {
+            $uuid = Uuid::fromString($projectId);
+            /** @var ?Project $project */
+            $project = $this->em->getRepository(Project::class)->find($uuid);
+        }
 
         $date = new DateTimeImmutable('now');
 
@@ -37,10 +48,12 @@ final class DailyNotesAction extends AbstractController
             [
                 'offset' => $offset,
                 'daily_notes' => [
-                    $this->getDayData($date1),
-                    $this->getDayData($date2),
-                    $this->getDayData($date3),
+                    $this->getDayData($date1, $project),
+                    $this->getDayData($date2, $project),
+                    $this->getDayData($date3, $project),
                 ],
+                'project' => $project ?? null,
+                'projects' => $this->em->getRepository(Project::class)->findAll(),
             ],
         );
     }
@@ -48,9 +61,9 @@ final class DailyNotesAction extends AbstractController
     /**
      * @return array<string, DateTimeInterface|DailyNote[]>
      */
-    private function getDayData(DateTimeInterface $date): array
+    private function getDayData(DateTimeInterface $date, ?Project $project = null): array
     {
-        $daily_notes = $this->repository->findByDay($date);
+        $daily_notes = $this->repository->findByDayAndProject($date, $project);
 
         return [
             'date' => $date,
