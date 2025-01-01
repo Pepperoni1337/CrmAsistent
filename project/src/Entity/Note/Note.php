@@ -2,6 +2,7 @@
 
 namespace App\Entity\Note;
 
+use App\Entity\Project\Project;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,6 +29,10 @@ final class Note
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
+
+    #[ORM\ManyToOne(targetEntity: Project::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Project $project = null;
 
     public function __construct(
         string $text
@@ -60,6 +65,16 @@ final class Note
     public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
+    }
+
+    public function getProject(): ?Project
+    {
+        return $this->project;
+    }
+
+    public function setProject(?Project $project): void
+    {
+        $this->project = $project;
     }
 
     #[ORM\PreUpdate]
