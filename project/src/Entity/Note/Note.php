@@ -16,6 +16,7 @@ class Note
     public const TEXT = 'text';
     public const CREATED_AT = 'createdAt';
     public const UPDATED_AT = 'updatedAt';
+    public const PROJECT = 'project';
 
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]

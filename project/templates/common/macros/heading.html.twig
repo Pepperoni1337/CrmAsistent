@@ -1,4 +1,4 @@
-{% macro heading(name, info, action = null, offset = null) %}
+{% macro heading(name, info, action = null, offset = null, projects = null, project_id = null) %}
     <div class="px-5 d-flex flex-row justify-content-between">
         <div>
             <h3 class="mb-0 text-4xl font-weight-bolder">{{ name }}</h3>
@@ -20,6 +20,17 @@
             <div>
                 <a class="btn btn-outline-dark mt-4 w-100" href="{{ action.path }}" type="button">{{ action.name }}</a>
             </div>
+        {% endif %}
+        {% if projects is not null %}
+        <form action="" method="get">
+            <select name="project_id" onchange="this.form.submit()">
+                <option value="">Všechny projekty</option>
+                {% for project in projects %}
+                    {% set slected = project.id is same as project_id %}
+                    <option value="{{ project.id }}" {{ slected ? "selected" : "" }}>{{ project.name }}</option>
+                {% endfor %}
+            </select>
+        </form>
         {% endif %}
     </div>
 {% endmacro %}

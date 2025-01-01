@@ -22,7 +22,10 @@
                     {
                         name: 'Přidat poznámku',
                         path: path('note_create'),
-                    }
+                    },
+                    null,
+                    projects,
+                    project.id ?? null
                 ) }}
                 <!-- end heading -->
                 {% for note in notes %}
