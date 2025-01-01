@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+{% from '/common/macros/breadcrums.html.twig' import breadcrumbs %}
+{% from '/common/macros/heading.html.twig' import heading %}
+{% from '/project/macros/project_block.html.twig' import projectBlock %}
+
+{% set selectedMenuItem = 'projects' %}
+
+{% block content %}
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <!-- Navbar -->
+        {{ breadcrumbs([
+            { name: 'Projekty' }
+        ]) }}
+        <!-- End Navbar -->
+        <div class="container-fluid py-2">
+            <div class="row">
+                <!-- heading -->
+                {{ heading(
+                    'Projekty',
+                    'Správa projektů'
+                ) }}
+                <!-- end heading -->
+                {% for project in projects %}
+                    {{ projectBlock(project) }}
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+{% endblock %}

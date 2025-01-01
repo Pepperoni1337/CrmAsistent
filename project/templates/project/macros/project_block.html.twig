@@ -1,0 +1,33 @@
+{% macro projectBlock(project) %}
+    <div class="col-xl-3 mb-xl-0 my-3">
+        <div class="card">
+            <div class="card-header p-2 ps-3">
+                <div class="d-flex justify-content-between p-3">
+                    <h3 class="text-2xl mb-0">{{ project.name }}</h3>
+                </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            {{ _self.projectBlockRow('Název projektu:', project.name) }}
+            <hr class="dark horizontal my-0">
+            {{ _self.projectBlockRow('Prefix úkolů:', project.taskPrefix) }}
+            <hr class="dark horizontal my-0">
+            {{ _self.projectBlockRow('Id  následujícího úkolu:', project.nextTaskId) }}
+            <hr class="dark horizontal my-0">
+            {{ _self.projectBlockRow('Vytvořeno:', project.createdAt|date("d. m. Y")) }}
+            <hr class="dark horizontal my-0">
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro projectBlockRow(key, value) %}
+    <div class="d-flex flex-column">
+        <div class="px-2 py-3 ps-3 d-flex flex-row justify-content-between align-items-center">
+            <h5 class="mb-0 text-black">
+                {{ key }}
+            </h5>
+            <h5 class="mb-0 text-black-50">
+                {{ value }}
+            </h5>
+        </div>
+    </div>
+{% endmacro %}
