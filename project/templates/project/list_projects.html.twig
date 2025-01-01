@@ -18,7 +18,11 @@
                 <!-- heading -->
                 {{ heading(
                     'Projekty',
-                    'Správa projektů'
+                    'Správa projektů',
+                    {
+                        name: 'Přidat projekt',
+                        path: path('project_create'),
+                    },
                 ) }}
                 <!-- end heading -->
                 {% for project in projects %}

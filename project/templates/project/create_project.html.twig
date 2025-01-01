@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+
+{% from '/common/macros/breadcrums.html.twig' import breadcrumbs %}
+{% from '/common/macros/heading.html.twig' import heading %}
+
+{% set selectedMenuItem = 'projects' %}
+
+{% block content %}
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <!-- Navbar -->
+        {{ breadcrumbs([
+            { name: 'Projekty', url: path('project_list') },
+            { name: 'Nový projekt' }
+        ]) }}
+        <!-- End Navbar -->
+        <div class="container-fluid py-2">
+            <div class="row">
+                <!-- heading -->
+                {{ heading(
+                    'Vytvoření noveho projektu',
+                    '',
+                ) }}
+                <!-- end heading -->
+                <div class="ms-3">
+                    <div class="col-xl-4 mb-xl-0 mb-4">
+                        <div class="card">
+                            <form action="{{ path('project_create') }}" method="post">
+                                <hr class="dark horizontal my-0">
+                                <div class="p-3">
+                                    <label for="name" class="p-3">Název projektu</label>
+                                    <input type="text" name="name">
+                                </div>
+                                <div class="p-3">
+                                    <label for="taskPrefix" class="p-3">Předpona úkolů</label>
+                                    <input type="text" name="taskPrefix">
+                                </div>
+                                <div class="p-3">
+                                    <label for="nextTaskId" class="p-3">Id  následujícího úkolu</label>
+                                    <input type="text" name="nextTaskId">
+                                </div>
+                                <div class="p-3 d-flex flex-row-reverse">
+                                    <button class="btn btn-dark-blue" type="submit">Vytvořit projekt</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
