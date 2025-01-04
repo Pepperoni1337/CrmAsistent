@@ -30,6 +30,11 @@
                                     <label for="text" class="p-3">Poznámka</label>
                                     <textarea name="text" id="description" cols="30" rows="10"></textarea>
                                 </div>
+                                <select name="project">
+                                    {% for project in projects %}
+                                        <option value="{{ project.id }}">{{ project.name }}</option>
+                                    {% endfor %}
+                                </select>
                                 <div class="p-3 d-flex flex-row-reverse">
                                     <button class="btn btn-dark-blue" type="submit">Vytvořit poznámku</button>
                                 </div>

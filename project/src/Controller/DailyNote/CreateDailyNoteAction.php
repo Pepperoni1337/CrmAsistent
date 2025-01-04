@@ -39,7 +39,9 @@ final class CreateDailyNoteAction extends AbstractController
 
         return $this->render(
             'daily_note/create_daily_note.html.twig',
-            [],
+            [
+                'projects' => $this->em->getRepository(Project::class)->findAll(),
+            ],
         );
     }
 
