@@ -30,7 +30,7 @@ class Task
     private string $description;
 
     #[ORM\Column(type: Types::STRING, enumType: TaskStatus::class)]
-    private TaskStatus $status;
+    private TaskStatus $status = TaskStatus::Backlog;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $createdAt;
@@ -45,7 +45,6 @@ class Task
         $this->id = Uuid::v7();
         $this->name = $name;
         $this->description = $description;
-        $this->status = TaskStatus::Backlog;
         $this->createdAt = new DateTimeImmutable();
     }
 
