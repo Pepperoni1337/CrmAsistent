@@ -25,9 +25,9 @@ final class CreateCalendarEventAction extends AbstractController
     {
         if ($request->getMethod() === 'POST') {
 
-            $date = new DateTimeImmutable($request->get('date'));
+            $date = new DateTimeImmutable($request->get(CalendarEvent::DATE));
 
-            $type = match ($request->get('type')) {
+            $type = match ($request->get(CalendarEvent::TYPE)) {
                 'one_time' => CalendarEventType::OneTime,
                 'monthly' => CalendarEventType::Monthly,
                 'quarterly' => CalendarEventType::Quarterly,
@@ -36,7 +36,7 @@ final class CreateCalendarEventAction extends AbstractController
             };
 
             $entity = new CalendarEvent(
-                name: $request->request->get('name'),
+                name: $request->request->get(CalendarEvent::NAME),
                 date: $date,
                 type: $type,
             );

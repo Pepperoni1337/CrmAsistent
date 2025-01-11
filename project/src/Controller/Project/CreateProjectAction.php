@@ -22,9 +22,9 @@ final class CreateProjectAction extends AbstractController
     {
         if ($request->getMethod() === 'POST') {
             $entity = new Project(
-                name: $request->request->get('name'),
-                taskPrefix: $request->request->get('taskPrefix'),
-                nextTaskId: (int) $request->request->get('nextTaskId'),
+                name: $request->request->get(Project::NAME),
+                taskPrefix: $request->request->get(Project::TASK_PREFIX),
+                nextTaskId: (int) $request->request->get(Project::NEXT_TASK_ID),
             );
 
             $this->em->persist($entity);

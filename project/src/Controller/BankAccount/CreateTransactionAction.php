@@ -25,15 +25,15 @@ final class CreateTransactionAction extends AbstractController
     {
         if ($request->getMethod() === 'POST') {
 
-            $date = new DateTimeImmutable($request->get('date'));
+            $date = new DateTimeImmutable($request->get(BankTransaction::DATE));
 
-            $type = $request->get('type') === 'income' ? BankTransactionType::Income : BankTransactionType::Expense;
+            $type = $request->get(BankTransaction::TYPE) === 'income' ? BankTransactionType::Income : BankTransactionType::Expense;
 
             $entity = new BankTransaction(
-                name: $request->request->get('name'),
+                name: $request->request->get(BankTransaction::NAME),
                 date: $date,
                 type:$type,
-                amount: (float)$request->request->get('amount'),
+                amount: (float)$request->request->get(BankTransaction::AMOUNT),
                 status: BankTransactionStatus::Pending,
             );
 

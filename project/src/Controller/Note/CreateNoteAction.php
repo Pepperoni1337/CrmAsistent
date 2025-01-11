@@ -23,10 +23,10 @@ final class CreateNoteAction extends AbstractController
     public function __invoke(Request $request): Response
     {
         if ($request->getMethod() === 'POST') {
-            $project = $this->getProject($request->request->get('project'));
+            $project = $this->getProject($request->request->get(Note::PROJECT));
 
             $entity = new Note(
-                text: $request->request->get('text'),
+                text: $request->request->get(Note::TEXT),
                 project: $project,
             );
 

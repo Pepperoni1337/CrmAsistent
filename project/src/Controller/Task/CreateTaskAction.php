@@ -22,8 +22,8 @@ final class CreateTaskAction extends AbstractController
     {
         if ($request->getMethod() === 'POST') {
             $entity = new Task(
-                name: $request->request->get('name'),
-                description: $request->request->get('description'),
+                name: $request->request->get(Task::NAME),
+                description: $request->request->get(Task::DESCRIPTION),
             );
 
             $this->em->persist($entity);
