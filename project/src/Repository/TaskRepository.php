@@ -18,6 +18,9 @@ final class TaskRepository extends ServiceEntityRepository
         parent::__construct($registry, Task::class);
     }
 
+    /**
+     * @return Task[]
+     */
     public function findByStatusAndProject(TaskStatus $status, ?Project $project): array {
         $qb = $this->createQueryBuilder('t');
 
