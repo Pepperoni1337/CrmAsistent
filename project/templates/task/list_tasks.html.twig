@@ -22,7 +22,10 @@
                     {
                         name: 'Přidat úkol',
                         path: path('task_create'),
-                    }
+                    },
+                    null,
+                    projects,
+                    project.id ?? null
                 ) }}
                 <!-- end heading -->
                 {{ taskList('Úkoly k vyřízení', backlogTasks, 'in_progress', 'rozpracovat', true) }}
