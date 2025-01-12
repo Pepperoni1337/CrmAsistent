@@ -90,13 +90,13 @@ final class TestController extends AbstractController
         $this->entityManager->flush();
 */
         $project = $this->entityManager->getRepository(Project::class)->findOneBy([
-            'name' => 'Rodina'
+            'name' => 'CRM Asistent'
         ]);
 
-        $test = $this->entityManager->getRepository(DailyNote::class)->findAll();
+        $test = $this->entityManager->getRepository(Task::class)->findAll();
 
         foreach ($test as $t) {
-            $t->setProject($project);
+            //$t->setProject($project);
             $this->entityManager->persist($t);
         }
         $this->entityManager->flush();

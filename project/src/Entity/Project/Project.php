@@ -82,6 +82,11 @@ class Project
         $this->nextTaskId = $nextTaskId;
     }
 
+    public function incrementNextTaskId(): void
+    {
+        $this->nextTaskId++;
+    }
+
     public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;

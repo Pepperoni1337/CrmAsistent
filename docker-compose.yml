@@ -10,7 +10,7 @@ services:
       - ./docker/nginx/config/:/etc/nginx/conf.d/
       - ./docker/logs/nginx:/var/log/nginx/
     ports:
-      - "80:80"
+      - "1337:80"
   php:
     container_name: ${PROJECT_NAME}_php
     build:
@@ -21,7 +21,7 @@ services:
       - ./project/:/var/www/html/
       - ./docker/logs/php.log:/var/log/fpm-php.www.log
     ports:
-      - "9000:9000"
+      - "1338:9000"
   db:
     container_name: ${PROJECT_NAME}_mysql
     image: mysql
@@ -32,8 +32,8 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
-      - '3306:3306'
+      - '1339:3306'
     expose:
-      - '3306'
+      - '1339'
     volumes:
       - ./docker/mysql/data:/var/lib/mysql

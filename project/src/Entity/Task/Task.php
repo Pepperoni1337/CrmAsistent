@@ -2,8 +2,8 @@
 
 namespace App\Entity\Task;
 
+use App\Entity\Project\Project;
 use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
@@ -16,6 +16,7 @@ class Task
     public const NAME = 'name';
     public const DESCRIPTION = 'description';
     public const STATUS = 'status';
+    public const PROJECT = 'project';
     public const CREATED_AT = 'createdAt';
     public const UPDATED_AT = 'updatedAt';
 
@@ -32,6 +33,10 @@ class Task
     #[ORM\Column(type: Types::STRING, enumType: TaskStatus::class)]
     private TaskStatus $status = TaskStatus::Backlog;
 
+    #[ORM\ManyToOne(targetEntity: Project::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private Project $project;
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $createdAt;
 
@@ -40,11 +45,13 @@ class Task
 
     public function __construct(
         string $name,
-        string $description
+        string $description,
+        Project $project,
     ) {
         $this->id = Uuid::v7();
         $this->name = $name;
         $this->description = $description;
+        $this->project = $project;
         $this->createdAt = new DateTimeImmutable();
     }
 
@@ -81,6 +88,16 @@ class Task
     public function setStatus(TaskStatus $status): void
     {
         $this->status = $status;
+    }
+
+    public function getProject(): Project
+    {
+        return $this->project;
+    }
+
+    public function setProject(Project $project): void
+    {
+        $this->project = $project;
     }
 
     public function getCreatedAt(): DateTimeImmutable
