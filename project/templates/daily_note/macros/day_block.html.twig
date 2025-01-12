@@ -10,7 +10,7 @@
             {% for note in dailyNotes %}
                 <div class="d-flex flex-column">
                     <div class="px-2 py-3 ps-3 d-flex flex-row justify-content-between align-items-center">
-                            {{ note.text }}
+                            {{ note.text|nl2br }}
                     </div>
                 </div>
                 <hr class="dark horizontal my-0">
