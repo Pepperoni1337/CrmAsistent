@@ -22,7 +22,7 @@ class DailyNote
     #[ORM\Column(type: 'uuid')]
     private Uuid $id;
 
-    #[ORM\Column(type: 'string', length: 511)]
+    #[ORM\Column(type: 'string', length: 2047)]
     private string $text;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
