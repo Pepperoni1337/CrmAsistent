@@ -35,15 +35,20 @@ class Project
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
 
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
+    private bool $private;
+
     public function __construct(
         string $name,
         string $taskPrefix,
-        int $nextTaskId
+        int $nextTaskId,
+        bool $private,
     ) {
         $this->id = Uuid::v7();
         $this->name = $name;
         $this->taskPrefix = $taskPrefix;
         $this->nextTaskId = $nextTaskId;
+        $this->private = $private;
         $this->createdAt = new DateTimeImmutable();
     }
 
@@ -95,6 +100,16 @@ class Project
     public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
+    }
+
+    public function isPrivate(): bool
+    {
+        return $this->private;
+    }
+
+    public function setPrivate(bool $private): void
+    {
+        $this->private = $private;
     }
 
     #[ORM\PreUpdate]
