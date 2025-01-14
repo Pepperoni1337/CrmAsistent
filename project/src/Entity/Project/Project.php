@@ -14,6 +14,7 @@ class Project
     public const NAME = 'name';
     public const TASK_PREFIX = 'taskPrefix';
     public const NEXT_TASK_ID = 'nextTaskId';
+    public const PRIVATE = 'private';
     public const UPDATED_AT = 'updatedAt';
 
     #[ORM\Id]

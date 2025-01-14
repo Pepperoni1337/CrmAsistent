@@ -32,6 +32,10 @@ final class DailyNoteRepository extends ServiceEntityRepository
         if($project !== null) {
             $qb->andWhere('dn.project = :project')
                 ->setParameter('project', $project->getId(), 'uuid');
+        } else {
+            $qb->leftJoin('dn.project', 'project');
+            $qb->andWhere('project.private = :private')
+                ->setParameter('private', false);
         }
 
         $qb->orderBy('dn.createdAt', 'DESC');
