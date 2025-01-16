@@ -32,6 +32,7 @@ final class CreateTaskAction extends AbstractController
                 ),
                 description: $request->request->get(Task::DESCRIPTION),
                 project: $project,
+                difficulty: (int) $request->request->get(Task::DIFFICULTY),
             );
 
             $project->incrementNextTaskId();

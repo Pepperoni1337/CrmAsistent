@@ -17,6 +17,7 @@ class Task
     public const DESCRIPTION = 'description';
     public const STATUS = 'status';
     public const PROJECT = 'project';
+    public const DIFFICULTY = 'difficulty';
     public const CREATED_AT = 'createdAt';
     public const UPDATED_AT = 'updatedAt';
 
@@ -37,6 +38,9 @@ class Task
     #[ORM\JoinColumn(nullable: false)]
     private Project $project;
 
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
+    private int $difficulty;
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $createdAt;
 
@@ -47,11 +51,13 @@ class Task
         string $name,
         string $description,
         Project $project,
+        int $difficulty
     ) {
         $this->id = Uuid::v7();
         $this->name = $name;
         $this->description = $description;
         $this->project = $project;
+        $this->difficulty = $difficulty;
         $this->createdAt = new DateTimeImmutable();
     }
 
@@ -98,6 +104,16 @@ class Task
     public function setProject(Project $project): void
     {
         $this->project = $project;
+    }
+
+    public function getDifficulty(): int
+    {
+        return $this->difficulty;
+    }
+
+    public function setDifficulty(int $difficulty): void
+    {
+        $this->difficulty = $difficulty;
     }
 
     public function getCreatedAt(): DateTimeImmutable
