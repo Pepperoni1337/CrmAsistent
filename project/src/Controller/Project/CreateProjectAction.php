@@ -25,6 +25,7 @@ final class CreateProjectAction extends AbstractController
                 name: $request->request->get(Project::NAME),
                 taskPrefix: $request->request->get(Project::TASK_PREFIX),
                 nextTaskId: (int) $request->request->get(Project::NEXT_TASK_ID),
+                private: (bool) $request->request->get(Project::PRIVATE),
             );
 
             $this->em->persist($entity);

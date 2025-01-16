@@ -13,6 +13,8 @@
             <hr class="dark horizontal my-0">
             {{ _self.projectBlockRow('Id  následujícího úkolu:', project.nextTaskId) }}
             <hr class="dark horizontal my-0">
+            {{ _self.projectBlockRow('Soukromý projekt:', project.private ? 'Ano' : 'Ne') }}
+            <hr class="dark horizontal my-0">
             {{ _self.projectBlockRow('Vytvořeno:', project.createdAt|date("d. m. Y")) }}
             <hr class="dark horizontal my-0">
         </div>
