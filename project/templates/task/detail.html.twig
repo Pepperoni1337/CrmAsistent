@@ -1,0 +1,67 @@
+{% extends "base.html.twig" %}
+
+{% from '/common/macros/breadcrums.html.twig' import breadcrumbs %}
+{% from '/common/macros/heading.html.twig' import heading %}
+
+{% set selectedMenuItem = 'tasks' %}
+
+{% block content %}
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <!-- Navbar -->
+        {{ breadcrumbs([
+            { name: 'Úkoly', url: path('task_list') },
+            { name: 'Detail úkolu' }
+        ]) }}
+        <!-- End Navbar -->
+        <div class="container-fluid py-2">
+            <div class="row">
+                <!-- heading -->
+                {{ heading(
+                     task.name,
+                    ''
+                ) }}
+                <!-- end heading -->
+                <div class="ms-3">
+                    <div class="col-xl-4 mb-xl-0 mb-4">
+                        <div class="card">
+                            <form action="{{ path('task_detail', {task: task.id}) }}" method="post">
+                                <div class="p-3">
+                                    <label for="name" class="p-3">Název úkolu</label>
+                                    <input type="text" name="name" value="{{ task.name }}">
+                                </div>
+                                <hr class="dark horizontal my-0">
+                                <div class="p-3">
+                                    <label for="description" class="p-3">Popis úkolu</label>
+                                    <textarea name="description" id="description" cols="30" rows="10">{{ task.description }}</textarea>
+                                </div>
+                                <div class="p-3">
+                                    <label for="project" class="p-3">Projekt</label>
+                                    <select name="project">
+                                        {% for project in projects %}
+                                            {% set selected = project.id is same as task.project.id ? 'selected' : '' %}
+                                            <option value="{{ project.id }}" {{ selected }}>{{ project.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="p-3">
+                                    {% set fibs = [0, 1, 2, 3, 5, 8, 13, 21, 34] %}
+                                    <label for="difficulty" class="p-3">Náročnost</label>
+                                    <select name="difficulty">
+                                        {% for number in fibs %}
+                                            {% set selected = number is same as task.difficulty ? 'selected' : '' %}
+                                            <option value="{{ number }}" {{ selected }}>{{ number }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="p-3 d-flex flex-row-reverse">
+                                    <button class="btn btn-dark-blue" type="submit">Uložit</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
