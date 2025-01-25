@@ -44,6 +44,9 @@ class Task
     #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
     private int $difficulty;
 
+    /**
+     * @var Collection<int, TaskComment>
+     */
     #[ORM\OneToMany(targetEntity: TaskComment::class, mappedBy: TaskComment::TASK)]
     #[ORM\OrderBy([TaskComment::CREATED_AT => 'DESC'])]
     private Collection $comments;
@@ -124,6 +127,9 @@ class Task
         $this->difficulty = $difficulty;
     }
 
+    /**
+     * @return Collection<int, TaskComment>
+     */
     public function getComments(): Collection
     {
         return $this->comments;
