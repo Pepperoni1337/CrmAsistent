@@ -45,6 +45,7 @@ class Task
     private int $difficulty;
 
     #[ORM\OneToMany(targetEntity: TaskComment::class, mappedBy: TaskComment::TASK)]
+    #[ORM\OrderBy([TaskComment::CREATED_AT => 'DESC'])]
     private Collection $comments;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
