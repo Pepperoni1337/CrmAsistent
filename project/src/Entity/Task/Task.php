@@ -4,6 +4,8 @@ namespace App\Entity\Task;
 
 use App\Entity\Project\Project;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
@@ -18,6 +20,7 @@ class Task
     public const STATUS = 'status';
     public const PROJECT = 'project';
     public const DIFFICULTY = 'difficulty';
+    public const COMMENTS = 'comments';
     public const CREATED_AT = 'createdAt';
     public const UPDATED_AT = 'updatedAt';
 
@@ -41,6 +44,9 @@ class Task
     #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
     private int $difficulty;
 
+    #[ORM\OneToMany(targetEntity: TaskComment::class, mappedBy: TaskComment::TASK)]
+    private Collection $comments;
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $createdAt;
 
@@ -58,6 +64,7 @@ class Task
         $this->description = $description;
         $this->project = $project;
         $this->difficulty = $difficulty;
+        $this->comments = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
     }
 
@@ -114,6 +121,16 @@ class Task
     public function setDifficulty(int $difficulty): void
     {
         $this->difficulty = $difficulty;
+    }
+
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(TaskComment $comment): void
+    {
+        $this->comments->add($comment);
     }
 
     public function getCreatedAt(): DateTimeImmutable
