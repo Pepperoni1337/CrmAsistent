@@ -1,4 +1,4 @@
-{% macro taskList(name, items, nextStatus, nextSatusTranslation, showCreateButton) %}
+{% macro taskList(name, items, transitions, showCreateButton) %}
     <div class="col-xl-4 col-sm-6 mb-xl-0 my-3">
         <div class="card">
             <div class="card-header p-2 ps-3">
@@ -15,7 +15,11 @@
                                 {{ task.name }}
                             </a>
                         </h5>
-                        <a href="{{ path('task_change_status', {'id': task.id, 'status': nextStatus}) }}">{{ nextSatusTranslation }}</a>
+                        <div class="d-flex flex-column">
+                            {% for transition in transitions %}
+                                <a href="{{ path('task_change_status', {'id': task.id, 'status': transition.status}) }}">{{ transition.name }}</a>
+                            {% endfor %}
+                        </div>
                     </div>
                     <div class="p-2 ps-3 d-flex flex-row justify-content-between align-items-center">
                         <p class="mb-0 text-md">{{ task.description|nl2br }}</p>

@@ -28,9 +28,31 @@
                     project.id ?? null
                 ) }}
                 <!-- end heading -->
-                {{ taskList('Úkoly k vyřízení', backlogTasks, 'in_progress', 'rozpracovat', true) }}
-                {{ taskList('Rozpracováno', inProgressTasks, 'done', 'dokončit', false) }}
-                {{ taskList('Splněné úkoly', doneTasks, 'deleted', 'odebrat', false) }}
+                {{ taskList(
+                    'Úkoly k vyřízení',
+                    backlogTasks,
+                    [
+                        {status: 'in_progress', name: 'Rozpracovat'},
+                    ],
+                    true
+                ) }}
+                {{ taskList(
+                    'Rozpracováno',
+                    inProgressTasks,
+                    [
+                        {status: 'done', name: 'Dokončit'},
+                    ],
+                    false
+                ) }}
+                {{ taskList(
+                    'Splněné úkoly',
+                    doneTasks,
+                    [
+                        {status: 'deleted', name: 'Odebrat'},
+                        {status: 'in_progress', name: 'Reopen'},
+                    ],
+                    false
+                ) }}
             </div>
         </div>
     </main>
