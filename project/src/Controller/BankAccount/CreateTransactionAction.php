@@ -29,11 +29,14 @@ final class CreateTransactionAction extends AbstractController
 
             $type = $request->get(BankTransaction::TYPE) === 'income' ? BankTransactionType::Income : BankTransactionType::Expense;
 
+            $amount = $request->get(BankTransaction::AMOUNT);
+            $amount = str_replace(',', '.', $amount);
+
             $entity = new BankTransaction(
                 name: $request->request->get(BankTransaction::NAME),
                 date: $date,
                 type:$type,
-                amount: (float)$request->request->get(BankTransaction::AMOUNT),
+                amount: (float)$amount,
                 status: BankTransactionStatus::Pending,
             );
 

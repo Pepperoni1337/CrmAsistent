@@ -39,11 +39,11 @@
             </div>
             {% if type is same as 'income' %}
                 <h5 class="mb-0 text-dark-blue">
-                    + {{ amount|abs }}
+                    + {{ amount|abs|number_format(2, '.', ',') }}
                 </h5>
             {% else %}
                 <h5 class="mb-0 text-warning">
-                    - {{ amount|abs }}
+                    - {{ amount|abs|number_format(2, '.', ',') }}
                 </h5>
             {% endif %}
         </div>
