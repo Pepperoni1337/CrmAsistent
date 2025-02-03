@@ -5,6 +5,8 @@ namespace App\Controller\DailyNote;
 use App\Entity\DailyNote\DailyNote;
 use App\Entity\Project\Project;
 use App\Repository\DailyNoteRepository;
+use App\Service\CurrentProjectPersister;
+use App\Service\CurrentProjectProvider;
 use App\Utils\DateTimeUtils;
 use DateTimeImmutable;
 use DateTimeInterface;
@@ -19,7 +21,9 @@ final class DailyNotesAction extends AbstractController
 {
     public function __construct(
         private readonly DailyNoteRepository $repository,
-        private readonly EntityManagerInterface $em
+        private readonly EntityManagerInterface $em,
+        private readonly CurrentProjectProvider $currentProjectProvider,
+        private readonly CurrentProjectPersister $currentProjectPersister,
     )
     {
     }
@@ -27,17 +31,12 @@ final class DailyNotesAction extends AbstractController
     #[Route('/daily-notes', name: 'daily_notes', methods: ['GET'])]
     public function __invoke(Request $request): Response
     {
-        $offset = $request->query->getInt('offset', 0);
-
-        $projectId = $request->get('project_id');
-        $project = null;
-        if ($projectId !== null && $projectId !== '') {
-            $uuid = Uuid::fromString($projectId);
-            /** @var ?Project $project */
-            $project = $this->em->getRepository(Project::class)->find($uuid);
-        }
+        $project = $this->currentProjectProvider->getProject($request->get('project_id'));
+        $this->currentProjectPersister->persist($project);
 
         $date = new DateTimeImmutable('now');
+
+        $offset = $request->query->getInt('offset', 0);
 
         $date1 = DateTimeUtils::offsetDay($date, $offset - 1);
         $date2 = DateTimeUtils::offsetDay($date, $offset);
