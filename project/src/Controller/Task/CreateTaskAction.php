@@ -49,6 +49,7 @@ final class CreateTaskAction extends AbstractController
             'task/create_task.html.twig',
             [
                 'projects' => $this->em->getRepository(Project::class)->findAll(),
+                'currentProject' => $this->currentProjectProvider->getProject(),
             ],
         );
     }
