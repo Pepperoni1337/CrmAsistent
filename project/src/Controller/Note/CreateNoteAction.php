@@ -4,6 +4,7 @@ namespace App\Controller\Note;
 
 use App\Entity\Note\Note;
 use App\Entity\Project\Project;
+use App\Service\CurrentProjectPersister;
 use App\Service\CurrentProjectProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,6 +18,7 @@ final class CreateNoteAction extends AbstractController
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly CurrentProjectProvider $currentProjectProvider,
+        private readonly CurrentProjectPersister $currentProjectPersister,
     )
     {
     }
@@ -26,6 +28,7 @@ final class CreateNoteAction extends AbstractController
     {
         if ($request->getMethod() === 'POST') {
             $project = $this->getProject($request->request->get(Note::PROJECT));
+            $this->currentProjectPersister->persist($project);
 
             $entity = new Note(
                 text: $request->request->get(Note::TEXT),

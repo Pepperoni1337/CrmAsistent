@@ -4,6 +4,7 @@ namespace App\Controller\DailyNote;
 
 use App\Entity\DailyNote\DailyNote;
 use App\Entity\Project\Project;
+use App\Service\CurrentProjectPersister;
 use App\Service\CurrentProjectProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,6 +18,7 @@ final class CreateDailyNoteAction extends AbstractController
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly CurrentProjectProvider $currentProjectProvider,
+        private readonly CurrentProjectPersister $currentProjectPersister,
     )
     {
     }
@@ -26,7 +28,7 @@ final class CreateDailyNoteAction extends AbstractController
     {
         if ($request->getMethod() === 'POST') {
             $project = $this->getProject($request->request->get(DailyNote::PROJECT));
-
+            $this->currentProjectPersister->persist($project);
 
             $entity = new DailyNote(
                 text: $request->request->get(DailyNote::TEXT),

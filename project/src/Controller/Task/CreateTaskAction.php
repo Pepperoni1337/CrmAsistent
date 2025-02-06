@@ -4,6 +4,7 @@ namespace App\Controller\Task;
 
 use App\Entity\Project\Project;
 use App\Entity\Task\Task;
+use App\Service\CurrentProjectPersister;
 use App\Service\CurrentProjectProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,6 +18,7 @@ final class CreateTaskAction extends AbstractController
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly CurrentProjectProvider $currentProjectProvider,
+        private readonly CurrentProjectPersister $currentProjectPersister,
     )
     {
     }
@@ -26,6 +28,7 @@ final class CreateTaskAction extends AbstractController
     {
         if ($request->getMethod() === 'POST') {
             $project = $this->getProject($request->request->get(Task::PROJECT));
+            $this->currentProjectPersister->persist($project);
 
             $entity = new Task(
                 name: $this->createNewTaskName(
