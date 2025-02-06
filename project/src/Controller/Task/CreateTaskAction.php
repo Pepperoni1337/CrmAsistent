@@ -4,6 +4,7 @@ namespace App\Controller\Task;
 
 use App\Entity\Project\Project;
 use App\Entity\Task\Task;
+use App\Service\CurrentProjectProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +15,8 @@ use Symfony\Component\Uid\Uuid;
 final class CreateTaskAction extends AbstractController
 {
     public function __construct(
-        private readonly EntityManagerInterface $em
+        private readonly EntityManagerInterface $em,
+        private readonly CurrentProjectProvider $currentProjectProvider,
     )
     {
     }

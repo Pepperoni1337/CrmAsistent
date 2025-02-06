@@ -19,7 +19,7 @@ final class CurrentProjectProvider
         $this->session = $requestStack->getSession();
     }
 
-    public function getProject(?string $requestProjectId): ?Project
+    public function getProject(?string $requestProjectId = null): ?Project
     {
         if ($requestProjectId === "") {
             return null;

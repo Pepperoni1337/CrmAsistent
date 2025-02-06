@@ -4,6 +4,7 @@ namespace App\Controller\DailyNote;
 
 use App\Entity\DailyNote\DailyNote;
 use App\Entity\Project\Project;
+use App\Service\CurrentProjectProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +15,8 @@ use Symfony\Component\Uid\Uuid;
 final class CreateDailyNoteAction extends AbstractController
 {
     public function __construct(
-        private readonly EntityManagerInterface $em
+        private readonly EntityManagerInterface $em,
+        private readonly CurrentProjectProvider $currentProjectProvider,
     )
     {
     }
@@ -41,6 +43,7 @@ final class CreateDailyNoteAction extends AbstractController
             'daily_note/create_daily_note.html.twig',
             [
                 'projects' => $this->em->getRepository(Project::class)->findAll(),
+                'currentProject' => $this->currentProjectProvider->getProject(),
             ],
         );
     }

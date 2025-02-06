@@ -32,7 +32,8 @@
                                 </div>
                                 <select name="project">
                                     {% for project in projects %}
-                                        <option value="{{ project.id }}">{{ project.name }}</option>
+                                        {% set selected = currentProject.id is same as project.id ? "selected" : ""  %}
+                                        <option value="{{ project.id }}" {{ selected }}>{{ project.name }}</option>
                                     {% endfor %}
                                 </select>
                                 <div class="p-3 d-flex flex-row-reverse">
