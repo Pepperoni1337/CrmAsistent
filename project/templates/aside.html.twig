@@ -10,7 +10,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
         <ul class="navbar-nav">
             {{ menu_item('Úkoly', path('task_list'), selectedMenuItem is same as 'tasks') }}
-            {{ menu_item('Poznámky', path('note_list'), selectedMenuItem is same as 'notes' ) }}
+            {{ menu_item('Poznámky', path('note_topic_list'), selectedMenuItem is same as 'notes' ) }}
             {{ menu_item('Denní poznámky', path('daily_notes'), selectedMenuItem is same as 'daily_notes' ) }}
             {{ menu_item('Kalendář', path('calendar'), selectedMenuItem is same as 'calendar' ) }}
             {{ menu_item('Rozpočet', path('bank_account_transactions'), selectedMenuItem is same as 'bank_account_transactions') }}

@@ -2,7 +2,7 @@
 
 {% from '/common/macros/breadcrums.html.twig' import breadcrumbs %}
 {% from '/common/macros/heading.html.twig' import heading %}
-{% from '/note/macros/note_block.html.twig' import noteBlock %}
+{% from '/note/macros/topic_block.html.twig' import topicBlock %}
 
 {% set selectedMenuItem = 'notes' %}
 
@@ -17,19 +17,19 @@
             <div class="row">
                 <!-- heading -->
                 {{ heading(
+                    'Témata poznámek',
                     'Poznámky',
-                    'Náhodné poznámky',
                     {
-                        name: 'Přidat poznámku',
-                        path: path('note_create'),
+                        name: 'Přidat nové téma',
+                        path: path('topic_create'),
                     },
                     null,
                     projects,
                     project.id ?? null
                 ) }}
                 <!-- end heading -->
-                {% for note in notes %}
-                    {{ noteBlock(note.text, note.createdAt, note.updatedAt) }}
+                {% for topic in topics %}
+                    {{ topicBlock(topic) }}
                 {% endfor %}
             </div>
         </div>

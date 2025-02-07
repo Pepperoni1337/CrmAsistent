@@ -9,6 +9,7 @@ use App\Entity\Calendar\CalendarEvent;
 use App\Entity\Calendar\CalendarEventType;
 use App\Entity\DailyNote\DailyNote;
 use App\Entity\Note\Note;
+use App\Entity\Note\Topic;
 use App\Entity\Project\Project;
 use App\Entity\Task\Task;
 use App\Repository\CalendarEventRepository;
@@ -30,7 +31,7 @@ final class TestController extends AbstractController
             'routePath' => '/notes/create',
             'routeName' => 'note_create',
             'entity' => Note::class,
-            'redirectRouteName' => 'note_list',
+            'redirectRouteName' => 'note_topic_list',
             'templatePath' => 'note/create_note.html.twig',
             'fields' => ['text'],
             'folder' => 'Note',
@@ -82,17 +83,20 @@ final class TestController extends AbstractController
 
     public function __invoke(): Response
     {
-/*
-        $entity = new DailyNote(
-            text: 'testadssdasd',
-        );
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
-*/
         $project = $this->entityManager->getRepository(Project::class)->findOneBy([
             'name' => 'CRM Asistent'
         ]);
 
+        $entity = new Topic(
+            $project,
+            'Test topic',
+            'Test description'
+        );
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+
+
+/*
         $test = $this->entityManager->getRepository(Task::class)->findAll();
 
         foreach ($test as $t) {

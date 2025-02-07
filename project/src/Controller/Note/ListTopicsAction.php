@@ -3,6 +3,7 @@
 namespace App\Controller\Note;
 
 use App\Entity\Note\Note;
+use App\Entity\Note\Topic;
 use App\Entity\Project\Project;
 use App\Service\CurrentProjectPersister;
 use App\Service\CurrentProjectProvider;
@@ -13,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Uid\Uuid;
 
-final class ListNotesAction extends AbstractController
+final class ListTopicsAction extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
@@ -23,13 +24,13 @@ final class ListNotesAction extends AbstractController
     {
     }
 
-    #[Route('/notes', name: 'note_list', methods: ['GET'])]
+    #[Route('/notes', name: 'note_topic_list', methods: ['GET'])]
     public function __invoke(Request $request): Response
     {
         $project = $this->currentProjectProvider->getProject($request->get('project_id'));
         $this->currentProjectPersister->persist($project);
 
-        $repository = $this->em->getRepository(Note::class);
+        $repository = $this->em->getRepository(Topic::class);
 
         $params = [];
 
@@ -37,12 +38,12 @@ final class ListNotesAction extends AbstractController
             $params[Note::PROJECT] = $project;
         }
 
-        $notes = $repository->findBy($params, [Note::UPDATED_AT => 'DESC']);
+        $topics = $repository->findBy($params, [Note::UPDATED_AT => 'DESC']);
 
         return $this->render(
-            'note/list_notes.html.twig',
+            'note/list_topics.html.twig',
             [
-                'notes' => $notes,
+                'topics' => $topics,
                 'project' => $project ?? null,
                 'projects' => $this->em->getRepository(Project::class)->findAll(),
             ],
