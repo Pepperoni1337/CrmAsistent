@@ -2,7 +2,7 @@
 
 namespace App\Controller\Note;
 
-use App\Entity\Note\Note;
+use App\Entity\Note\Topic;
 use App\Entity\Project\Project;
 use App\Service\CurrentProjectPersister;
 use App\Service\CurrentProjectProvider;
@@ -27,12 +27,13 @@ final class CreateTopicAction extends AbstractController
     public function __invoke(Request $request): Response
     {
         if ($request->getMethod() === 'POST') {
-            $project = $this->getProject($request->request->get(Note::PROJECT));
+            $project = $this->getProject($request->request->get(Topic::PROJECT));
             $this->currentProjectPersister->persist($project);
 
-            $entity = new Note(
-                text: $request->request->get(Note::TEXT),
+            $entity = new Topic(
                 project: $project,
+                name: $request->request->get(Topic::NAME),
+                description: $request->request->get(Topic::DESCRIPTION),
             );
 
             $this->em->persist($entity);
@@ -42,7 +43,7 @@ final class CreateTopicAction extends AbstractController
         }
 
         return $this->render(
-            'note/create_note.html.twig',
+            'note/create_topic.html.twig',
             [
                 'projects' => $this->em->getRepository(Project::class)->findAll(),
                 'currentProject' => $this->currentProjectProvider->getProject(),

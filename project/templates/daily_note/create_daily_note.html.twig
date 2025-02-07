@@ -30,12 +30,15 @@
                                     <label for="text" class="p-3">Poznámka</label>
                                     <textarea name="text" id="description" cols="30" rows="10"></textarea>
                                 </div>
-                                <select name="project">
-                                    {% for project in projects %}
-                                        {% set selected = currentProject.id is same as project.id ? "selected" : ""  %}
-                                        <option value="{{ project.id }}" {{ selected }}>{{ project.name }}</option>
-                                    {% endfor %}
-                                </select>
+                                <div class="p-3">
+                                    <label for="project" class="p-3">Projekt</label>
+                                    <select name="project">
+                                        {% for project in projects %}
+                                            {% set selected = currentProject.id is same as project.id ? "selected" : ""  %}
+                                            <option value="{{ project.id }}" {{ selected }}>{{ project.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
                                 <div class="p-3 d-flex flex-row-reverse">
                                     <button class="btn btn-dark-blue" type="submit">Vytvořit poznámku</button>
                                 </div>
