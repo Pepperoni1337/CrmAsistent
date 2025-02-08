@@ -1,0 +1,57 @@
+{% extends "base.html.twig" %}
+
+{% from '/common/macros/breadcrums.html.twig' import breadcrumbs %}
+{% from '/common/macros/heading.html.twig' import heading %}
+
+{% set selectedMenuItem = 'notes' %}
+
+{% block content %}
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <!-- Navbar -->
+        {{ breadcrumbs([
+            { name: 'Poznámky', url: path('note_topic_list') },
+            { name: 'Detail tématu' }
+        ]) }}
+        <!-- End Navbar -->
+        <div class="container-fluid py-2">
+            <div class="row">
+                <!-- heading -->
+                {{ heading(
+                    topic.name,
+                    ''
+                ) }}
+                <!-- end heading -->
+                <div class="ms-3 d-flex">
+                    <div class="col-5 mb-xl-0 mb-4 p-2">
+                        <div class="card">
+                            <form action="{{ path('note_topic_detail', {topic: topic.id}) }}" method="post">
+                                <div class="p-3">
+                                    <label for="name" class="p-3">Název tématu</label>
+                                    <input type="text" name="name" value="{{ topic.name }}">
+                                </div>
+                                <hr class="dark horizontal my-0">
+                                <div class="p-3">
+                                    <label for="description" class="p-3">Popis tématu</label>
+                                    <textarea name="description" id="description" cols="50" rows="10">{{ topic.description }}</textarea>
+                                </div>
+                                <div class="p-3">
+                                    <label for="project" class="p-3">Projekt</label>
+                                    <select name="project">
+                                        {% for project in projects %}
+                                            {% set selected = project.id is same as topic.project.id ? 'selected' : '' %}
+                                            <option value="{{ project.id }}" {{ selected }}>{{ project.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="p-3 d-flex flex-row-reverse">
+                                    <button class="btn btn-dark-blue" type="submit">Uložit</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

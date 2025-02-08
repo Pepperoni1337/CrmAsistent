@@ -34,13 +34,11 @@ final class TaskDetailAction extends AbstractController
         );
     }
 
-    private function mapRequestToTask(Request $request, Task $task): Task
+    private function mapRequestToTask(Request $request, Task $task): void
     {
         $task->setName($request->request->get(Task::NAME));
         $task->setDescription($request->request->get(Task::DESCRIPTION));
         $task->setProject($this->em->getRepository(Project::class)->find($request->request->get(Task::PROJECT)));
         $task->setDifficulty((int) $request->request->get(Task::DIFFICULTY));
-
-        return $task;
     }
 }
