@@ -52,7 +52,7 @@
                     </div>
                     <div class="col-7 mb-xl-0 mb-4 p-2">
                         <div class="card">
-                            <form action="{{ path('task_add_comment', {task: topic.id}) }}" method="post">
+                            <form action="{{ path('topic_add_note', {topic: topic.id}) }}" method="post">
                                 <div class="p-3">
                                     <label for="text" class="p-3">Text poznámky</label>
                                     <textarea name="text" id="text" cols="80" rows="10"></textarea>

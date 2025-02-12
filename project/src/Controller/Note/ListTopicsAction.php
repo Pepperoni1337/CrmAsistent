@@ -35,7 +35,7 @@ final class ListTopicsAction extends AbstractController
         $params = [];
 
         if ($project !== null) {
-            $params[Note::PROJECT] = $project;
+            $params[Topic::PROJECT] = $project;
         }
 
         $topics = $repository->findBy($params, [Note::UPDATED_AT => 'DESC']);

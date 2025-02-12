@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/topics/{topic}}', name: 'note_topic_detail', methods: ['GET', 'POST'])]
+#[Route('/topics/{topic}', name: 'note_topic_detail', methods: ['GET', 'POST'])]
 final class TopicDetailAction extends AbstractController
 {
     public function __construct(
@@ -31,7 +31,7 @@ final class TopicDetailAction extends AbstractController
             [
                 'topic' => $topic,
                 'projects' => $this->em->getRepository(Project::class)->findAll(),
-                'notes' => $this->em->getRepository(Note::class)->findBy([Note::TOPIC => $topic])
+                'notes' => $this->em->getRepository(Note::class)->findBy([Note::TOPIC => $topic], [Note::CREATED_AT => 'desc'])
             ],
         );
     }
