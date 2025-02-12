@@ -2,6 +2,7 @@
 
 namespace App\Entity\Note;
 
+use App\Entity\Common\IdTrait;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,15 +12,13 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\HasLifecycleCallbacks]
 class Note
 {
+    use IdTrait;
+
     public const ID = 'id';
     public const TOPIC = 'topic';
     public const TEXT = 'text';
     public const CREATED_AT = 'createdAt';
     public const UPDATED_AT = 'updatedAt';
-
-    #[ORM\Id]
-    #[ORM\Column(type: 'uuid')]
-    private Uuid $id;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -42,11 +41,6 @@ class Note
         $this->text = $text;
         $this->topic = $topic;
         $this->createdAt = new DateTimeImmutable();
-    }
-
-    public function getId(): Uuid
-    {
-        return $this->id;
     }
 
     public function getTopic(): Topic

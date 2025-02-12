@@ -2,6 +2,7 @@
 
 namespace App\Entity\Task;
 
+use App\Entity\Common\IdTrait;
 use App\Entity\Project\Project;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,6 +15,8 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\HasLifecycleCallbacks]
 class Task
 {
+    use IdTrait;
+
     public const ID = 'id';
     public const NAME = 'name';
     public const DESCRIPTION = 'description';
@@ -23,10 +26,6 @@ class Task
     public const COMMENTS = 'comments';
     public const CREATED_AT = 'createdAt';
     public const UPDATED_AT = 'updatedAt';
-
-    #[ORM\Id]
-    #[ORM\Column(type: 'uuid')]
-    private Uuid $id;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $name;
@@ -70,11 +69,6 @@ class Task
         $this->difficulty = $difficulty;
         $this->comments = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
-    }
-
-    public function getId(): Uuid
-    {
-        return $this->id;
     }
 
     public function getName(): string

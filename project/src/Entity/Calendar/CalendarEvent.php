@@ -2,6 +2,7 @@
 
 namespace App\Entity\Calendar;
 
+use App\Entity\Common\IdTrait;
 use App\Repository\CalendarEventRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
@@ -12,15 +13,13 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\HasLifecycleCallbacks]
 class CalendarEvent
 {
+    use IdTrait;
+
     public const ID = 'id';
     public const NAME = 'name';
     public const DATE = 'date';
     public const TYPE = 'type';
     public const UPDATED_AT = 'updatedAt';
-
-    #[ORM\Id]
-    #[ORM\Column(type: 'uuid')]
-    private Uuid $id;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
     private string $name;
@@ -43,11 +42,6 @@ class CalendarEvent
         $this->name = $name;
         $this->date = $date;
         $this->type = $type;
-    }
-
-    public function getId(): Uuid
-    {
-        return $this->id;
     }
 
     public function getName(): string

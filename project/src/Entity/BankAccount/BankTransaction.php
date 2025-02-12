@@ -2,6 +2,7 @@
 
 namespace App\Entity\BankAccount;
 
+use App\Entity\Common\IdTrait;
 use App\Repository\BankTransactionRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
@@ -12,6 +13,8 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\HasLifecycleCallbacks]
 class BankTransaction
 {
+    use IdTrait;
+
     public const ID = 'id';
     public const NAME = 'name';
     public const DATE = 'date';
@@ -19,10 +22,6 @@ class BankTransaction
     public const AMOUNT = 'amount';
     public const STATUS = 'status';
     public const UPDATED_AT = 'updatedAt';
-
-    #[ORM\Id]
-    #[ORM\Column(type: 'uuid')]
-    private Uuid $id;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $name;
@@ -55,11 +54,6 @@ class BankTransaction
         $this->type = $type;
         $this->amount = $amount;
         $this->status = $status;
-    }
-
-    public function getId(): Uuid
-    {
-        return $this->id;
     }
 
     public function getName(): string

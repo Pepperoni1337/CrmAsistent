@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity\Project;
+use App\Entity\Common\IdTrait;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,16 +11,14 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\HasLifecycleCallbacks]
 class Project
 {
+    use IdTrait;
+
     public const ID = 'id';
     public const NAME = 'name';
     public const TASK_PREFIX = 'taskPrefix';
     public const NEXT_TASK_ID = 'nextTaskId';
     public const PRIVATE = 'private';
     public const UPDATED_AT = 'updatedAt';
-
-    #[ORM\Id]
-    #[ORM\Column(type: 'uuid')]
-    private Uuid $id;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $name;
@@ -51,11 +50,6 @@ class Project
         $this->nextTaskId = $nextTaskId;
         $this->private = $private;
         $this->createdAt = new DateTimeImmutable();
-    }
-
-    public function getId(): Uuid
-    {
-        return $this->id;
     }
 
     public function getName(): string
