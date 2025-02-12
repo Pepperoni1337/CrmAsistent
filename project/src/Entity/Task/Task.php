@@ -46,7 +46,7 @@ class Task
     /**
      * @var Collection<int, TaskComment>
      */
-    #[ORM\OneToMany(targetEntity: TaskComment::class, mappedBy: TaskComment::TASK)]
+    #[ORM\OneToMany(targetEntity: TaskComment::class, mappedBy: TaskComment::TASK, orphanRemoval: true)]
     #[ORM\OrderBy([TaskComment::CREATED_AT => 'DESC'])]
     private Collection $comments;
 

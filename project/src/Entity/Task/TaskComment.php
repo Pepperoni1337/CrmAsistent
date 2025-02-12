@@ -20,7 +20,7 @@ class TaskComment
     public const CREATED_AT = 'createdAt';
     public const UPDATED_AT = 'updatedAt';
 
-    #[ORM\ManyToOne(targetEntity: Task::class, inversedBy: Task::COMMENTS)]
+    #[ORM\ManyToOne(targetEntity: Task::class, cascade: ['remove'], inversedBy: Task::COMMENTS)]
     #[ORM\JoinColumn(nullable: false)]
     private Task $task;
 
