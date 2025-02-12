@@ -84,17 +84,20 @@ final class TestController extends AbstractController
     public function __invoke(): Response
     {
         $project = $this->entityManager->getRepository(Project::class)->findOneBy([
-            'name' => 'CRM Asistent'
+            'name' => 'Práce DS'
         ]);
 
-        $entity = new Topic(
-            $project,
-            'Test topic',
-            'Test description'
-        );
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
 
+        $topics = $this->entityManager->getRepository(Topic::class)->findAll();
+
+        $notes = $this->entityManager->getRepository(Note::class)->findBy([Note::PROJECT => $project]);
+        $topic = $topics[1];
+
+        foreach ($notes as $note) {
+            $note->setTopic($topic);
+        }
+
+        $this->entityManager->flush();
 
 /*
         $test = $this->entityManager->getRepository(Task::class)->findAll();

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Note;
 
+use App\Entity\Note\Note;
 use App\Entity\Note\Topic;
 use App\Entity\Project\Project;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,6 +31,7 @@ final class TopicDetailAction extends AbstractController
             [
                 'topic' => $topic,
                 'projects' => $this->em->getRepository(Project::class)->findAll(),
+                'notes' => $this->em->getRepository(Note::class)->findBy([Note::TOPIC => $topic])
             ],
         );
     }

@@ -2,7 +2,6 @@
 
 namespace App\Entity\Note;
 
-use App\Entity\Project\Project;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,14 +12,18 @@ use Symfony\Component\Uid\Uuid;
 class Note
 {
     public const ID = 'id';
+    public const TOPIC = 'topic';
     public const TEXT = 'text';
     public const CREATED_AT = 'createdAt';
     public const UPDATED_AT = 'updatedAt';
-    public const PROJECT = 'project';
 
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
     private Uuid $id;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private Topic $topic;
 
     #[ORM\Column(type: 'string', length: 511)]
     private string $text;
@@ -31,23 +34,29 @@ class Note
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
 
-    #[ORM\ManyToOne(targetEntity: Project::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private Project $project;
-
     public function __construct(
         string $text,
-        Project $project
+        Topic $topic
     ) {
         $this->id = Uuid::v7();
         $this->text = $text;
-        $this->project = $project;
+        $this->topic = $topic;
         $this->createdAt = new DateTimeImmutable();
     }
 
     public function getId(): Uuid
     {
         return $this->id;
+    }
+
+    public function getTopic(): Topic
+    {
+        return $this->topic;
+    }
+
+    public function setTopic(Topic $topic): void
+    {
+        $this->topic = $topic;
     }
 
     public function getText(): string
@@ -68,16 +77,6 @@ class Note
     public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
-    }
-
-    public function getProject(): Project
-    {
-        return $this->project;
-    }
-
-    public function setProject(Project $project): void
-    {
-        $this->project = $project;
     }
 
     #[ORM\PreUpdate]
