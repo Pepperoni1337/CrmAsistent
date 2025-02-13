@@ -24,7 +24,7 @@ class Note
     #[ORM\JoinColumn(nullable: false)]
     private Topic $topic;
 
-    #[ORM\Column(type: 'string', length: 511)]
+    #[ORM\Column(type: 'string', length: 4095)]
     private string $text;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
