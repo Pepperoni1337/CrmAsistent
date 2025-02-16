@@ -34,7 +34,7 @@
                                     <label for="project" class="p-3">Projekt</label>
                                     <select name="project">
                                         {% for project in projects %}
-                                            {% set selected = currentProject.id is same as project.id ? "selected" : ""  %}
+                                            {% set selected = currentProject.id ?? null is same as project.id ? "selected" : ""  %}
                                             <option value="{{ project.id }}" {{ selected }}>{{ project.name }}</option>
                                         {% endfor %}
                                     </select>
