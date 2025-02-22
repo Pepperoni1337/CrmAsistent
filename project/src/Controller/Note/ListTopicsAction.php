@@ -5,6 +5,7 @@ namespace App\Controller\Note;
 use App\Entity\Note\Note;
 use App\Entity\Note\Topic;
 use App\Entity\Project\Project;
+use App\Repository\TopicRepository;
 use App\Service\CurrentProjectPersister;
 use App\Service\CurrentProjectProvider;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,6 +21,7 @@ final class ListTopicsAction extends AbstractController
         private readonly EntityManagerInterface $em,
         private readonly CurrentProjectProvider $currentProjectProvider,
         private readonly CurrentProjectPersister $currentProjectPersister,
+        private readonly TopicRepository $topicRepository,
     )
     {
     }
@@ -30,20 +32,10 @@ final class ListTopicsAction extends AbstractController
         $project = $this->currentProjectProvider->getProject($request->get('project_id'));
         $this->currentProjectPersister->persist($project);
 
-        $repository = $this->em->getRepository(Topic::class);
-
-        $params = [];
-
-        if ($project !== null) {
-            $params[Topic::PROJECT] = $project;
-        }
-
-        $topics = $repository->findBy($params, [Note::UPDATED_AT => 'DESC']);
-
         return $this->render(
             'note/list_topics.html.twig',
             [
-                'topics' => $topics,
+                'topics' => $this->topicRepository->findByProject($project),
                 'project' => $project ?? null,
                 'projects' => $this->em->getRepository(Project::class)->findAll(),
             ],
