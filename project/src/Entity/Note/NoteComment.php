@@ -4,37 +4,28 @@ namespace App\Entity\Note;
 
 use App\Entity\Common\IdTrait;
 use DateTimeImmutable;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
-class Note
+final class NoteComment
 {
     use IdTrait;
 
     public const ID = 'id';
-    public const TOPIC = 'topic';
+    public const NOTE = 'note';
     public const TEXT = 'text';
-    public const COMMENTS = 'comments';
     public const CREATED_AT = 'createdAt';
     public const UPDATED_AT = 'updatedAt';
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private Topic $topic;
+    private Note $note;
 
     #[ORM\Column(type: 'string', length: 4095)]
     private string $text;
-
-    /**
-     * @var Collection<int, NoteComment>
-     */
-    #[ORM\OneToMany(targetEntity: NoteComment::class, mappedBy: NoteComment::NOTE)]
-    private Collection $comments;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $createdAt;
@@ -44,23 +35,22 @@ class Note
 
     public function __construct(
         string $text,
-        Topic $topic
+        Note $note
     ) {
         $this->id = Uuid::v7();
         $this->text = $text;
-        $this->topic = $topic;
-        $this->comments = new ArrayCollection();
+        $this->note = $note;
         $this->createdAt = new DateTimeImmutable();
     }
 
-    public function getTopic(): Topic
+    public function getNote(): Note
     {
-        return $this->topic;
+        return $this->note;
     }
 
-    public function setTopic(Topic $topic): void
+    public function setNote(Note $note): void
     {
-        $this->topic = $topic;
+        $this->note = $note;
     }
 
     public function getText(): string
@@ -81,14 +71,6 @@ class Note
     public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
-    }
-
-    /**
-     * @return Collection<int, NoteComment>
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
     }
 
     #[ORM\PreUpdate]
